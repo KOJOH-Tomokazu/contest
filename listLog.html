@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<link rel="stylesheet" href="libs/jQuery/jquery-ui.css" />
+<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="listLog.css" />
+<script src="libs/jQuery/jquery.js"></script>
+<script src="libs/jQuery/jquery-ui.js"></script>
+<script src="libs/bootstrap/js/bootstrap.js"></script>
+<script src="common.js"></script>
+<script src="listLog.js"></script>
+<title>オールＪＡ４コンテスト ログ提出状況</title>
+</head>
+<body>
+<!-- ヘッダー -->
+<div class="navbar navbar-expand fixed-top text-white bg-primary"><div class="container-fluid ms-2 me-2">
+	<div class="collapse navbar-collapse">
+		<nav aria-label="breadcrumb" role="navigation" class="fs-3"><span id="contest_name"></span> ログ提出状況</nav>
+	</div>
+</div></div>
+
+<p><button class="btn btn-sm btn-primary border border-primary" onclick="listLogs();">再読み込み</button></p>
+<table class="table table-bordered w-auto" id="list">
+	<thead><tr>
+		<th id="callsign">コールサイン</th>
+		<th id="category">部門</th>
+		<th id="uploadtime">提出日時<div class="sortable sort_none" data-key="SUM.uploadtime"></div></th>
+		<th id="status">処理ステータス<div class="sortable sort_none" data-key="SUM.status"></div></th>
+		<th id="buttons"></th>
+	</tr></thead>
+	<tbody></tbody>
+	<tfoot></tfoot>
+</table>
+<div id="comment">
+	<div id="body"></div>
+	<div id="callsign"></div>
+</div>
+<!-- パスワード -->
+<div id="password" class="modal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">
+	<div class="modal-header">
+		<div class="modal-title">成績閲覧用パスワードを入力してください</div>
+	</div>
+	<div class="modal-body">
+		<input type="password" id="password" class="form-control" />
+	</div>
+	<div class="modal-footer"></div>
+</div></div></div>
+<!-- ダイアログ -->
+<div id="dialog"></div>
+<!-- 待機中背景 -->
+<div id="wait"></div>
+</body>
+</html>

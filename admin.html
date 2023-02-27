@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<link rel="stylesheet" type="text/css" href="libs/jQuery/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="common.css" />
+<link rel="stylesheet" type="text/css" href="admin.css" />
+<script src="libs/jQuery/jquery-3.6.0.js"></script>
+<script src="libs/jQuery/jquery-ui.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="common.js"></script>
+<script src="admin.js"></script>
+<title>コンテスト 管理者用</title>
+</head>
+<body>
+<!-- ヘッダー -->
+<div class="navbar navbar-expand fixed-top text-white bg-primary"><div class="container-fluid ms-2 me-2">
+	<div class="collapse navbar-collapse">
+		<nav aria-label="breadcrumb" role="navigation" class="fs-3"><span id="contest_name"></span> 管理者用</nav>
+		<ul class="navbar-nav ms-auto"><li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle bg-white rounded" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="navbarUserMenu"></a>
+			<div class="dropdown-menu">
+				<a class="dropdown-item text-body" href="#" onclick="change_password();">パスワード変更</a>
+				<a class="dropdown-item text-body" href="#" onclick="logout();">ログアウト</a>
+			</div>
+		</li></ul>
+	</div>
+</div></div>
+
+<div class="container-fluid">
+	<ul id="menu">
+		<li><a href="listLog.html"    >提出状況の確認・照合開始(管理者用)</a></li>
+		<li><a href="registerLog.html">ログデータの手動登録と確認</a></li>
+		<li><a href="ranking.php"     >結果表出力</a></li>
+		<li><a href="master.html"     >マスターメンテナンス</a></li>
+	</ul>
+
+	<div class="card" id="status">
+		<div class="card-header">提出期限の設定</div>
+		<div class="card-body">
+			<div class="input-group">
+				<span class="input-group-text">公表する提出締切日時</span>
+				<input type="date" id="deadline1" class="form-control" />
+				<input type="time" step="1"       class="form-control" value="23:59:59" readonly="readonly" />
+			</div>
+			<div class="input-group">
+				<span class="input-group-text">最終の提出締切日時</span>
+				<input type="date" id="deadline2" class="form-control" />
+				<input type="time" step="1"       class="form-control" value="23:59:59" readonly="readonly" />
+			</div>
+			<p><button class="btn btn-sm btn-primary" onclick="set_deadline();">登録</button></p>
+		</div>
+	</div>
+</div>
+
+<!-- パスワード変更ダイアログ -->
+<div id="password" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">
+	<div class="modal-header"><span class="modal-title">パスワードの変更</span></div>
+	<div class="modal-body">
+		<div class="row"><div class="col input-group">
+			<span class="input-group-text">ログインＩＤ</span>
+			<input type="text" id="user_id" class="form-control" readonly="readonly" />
+		</div></div>
+		<div class="row"><div class="col input-group">
+			<span class="input-group-text">現在のパスワード</span>
+			<input type="password" id="old_password" maxlength="72" class="form-control" />
+		</div></div>
+		<div class="row"><div class="col input-group">
+			<span class="input-group-text">新パスワード</span>
+			<input type="password" id="new_password1" maxlength="72" class="form-control" />
+		</div></div>
+		<div class="row"><div class="col input-group">
+			<span class="input-group-text">新パスワード(確認入力)</span>
+			<input type="password" id="new_password2" maxlength="72" class="form-control" />
+		</div></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-sm btn-danger"  onclick="change_password_execute();">変更</button>
+		<button class="btn btn-sm btn-primary" onclick="$('div#password').modal('hide');">閉じる</button>
+	</div>
+</div></div></div>
+<!-- ログインダイアログ -->
+<div id="login" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">
+	<div class="modal-header"><span class="modal-title">コンテスト 管理者用</span></div>
+	<div class="modal-body">
+		<div class="row mb-1"><div class="col input-group">
+			<select id="schema" class="form-select"></select>
+		</div></div>
+		<div class="row"><div class="col input-group">
+			<span class="input-group-text">ログインＩＤ</span>
+			<input type="text" id="user" class="form-control" />
+		</div></div>
+		<div class="row mb-1"><div class="col input-group">
+			<span class="input-group-text">パスワード</span>
+			<input type="password" id="pass" class="form-control" />
+		</div></div>
+		<div class="row"><div class="col" id="message"></div></div>
+	</div>
+	<div class="modal-footer">
+		<button id="login"  class="btn btn-sm btn-primary">ログイン</button>
+		<button id="back"   class="btn btn-sm btn-primary">トップへ</button>
+		<button id="create" class="btn btn-sm btn-primary">新規作成</button>
+	</div>
+</div></div></div>
+<!-- 新規作成ダイアログ -->
+<div id="create" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">
+	<div class="modal-header"><span class="modal-title">新しいコンテストを作る</span></div>
+	<div class="modal-body">
+		<div class="input-group">
+			<span class="input-group-text">コンテストＩＤ</span>
+			<input type="text" id="schema_name" class="form-control" />
+		</div>
+		<div class="input-group">
+			<span class="input-group-text">コンテスト名</span>
+			<input type="text" id="description" class="form-control" />
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="create" class="btn btn-sm btn-primary">作成</button>
+		<button id="close"  class="btn btn-sm btn-primary" onclick="">閉じる</button>
+	</div>
+</div></div></div>
+<!-- 待機中背景 -->
+<div id="wait"></div>
+</body>
+</html>

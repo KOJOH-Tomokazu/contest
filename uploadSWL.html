@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<link rel="stylesheet" type="text/css" href="common.css" />
+<link rel="stylesheet" type="text/css" href="uploadLog.css" />
+<link rel="stylesheet" type="text/css" href="libs/jQuery/jquery-ui.css" />
+<script src="libs/jQuery/jquery-3.3.1.js"></script>
+<script src="libs/jQuery/jquery-ui.js"></script>
+<script src="common.js"></script>
+<script src="uploadLog.js"></script>
+<title>オールＪＡ４コンテスト ログアップロード</title>
+</head>
+<style type="text/css">
+table#log tbody td.sentNumber #sentmulti {
+	width:		100px;
+	min-width:	100px;
+	max-width:	100px;
+}</style>
+<body>
+<p id="message"></p>
+<p>zLog令和版、zLog令和版ALL形式への対応が完了しております。<br />
+どうしてもうまく取り込めない場合は、jj4kme@gmail.com まで連絡をお願いします</p>
+<p>zLog令和版への対応に伴い、旧来のzLogで作成されたログフォーマットは「非対応」となります、ご容赦ください SRY</p>
+<p>コンテストのサマリーとログはこちらからアップロードをお願いします<br />
+サマリーとログを入力後、「提出」ボタンを押してください<br />
+作成済みのファイルやテキストデータを取り込むこともできます</p>
+<br />
+<p>ログの提出手順</p>
+<ol>
+<li>ファイル形式とアップロード方法に応じて「ログデータの取込」覧のボタンを押す</li>
+<li>「ログのタイムゾーン」を選択</li>
+<li>データをテキストファイルに保存してある場合はファイルをアップロード、テキストデータを貼り付ける場合は「テキストを貼付け」の欄に貼り付け</li>
+<li>「取込」ボタンを押す</li>
+<li>下段の「参加部門」以下に取り込んだ内容が表示されるので、内容に間違いが無いかを確認</li>
+<li>「提出」ボタンを押す</li>
+</ol>
+<form class="form" id="import">
+	<input type="hidden" id="schema"   name="SCHEMA"   />
+	<input type="hidden" id="fileType" name="fileType" />
+	<input type="hidden" id="method"   name="method"   />
+	<table class="input">
+		<tbody>
+			<tr>
+				<th>フォーマット</th>
+				<td id="fileType"></td>
+			</tr>
+			<tr>
+				<th>ログのタイムゾーン</th>
+				<td><label><input type="radio" name="timezone" id="timezone_jst" value="+09" />ＪＳＴ</label>&nbsp;
+					<label><input type="radio" name="timezone" id="timezone_utc" value="+00" />ＵＴＣ</label><br />
+					<span class="message">間違えると相手側のログと照合できなくなりますのでご注意</span></td>
+			</tr>
+			<tr id="file">
+				<th>ファイルをアップロード</th>
+				<td><input type="file" id="source" name="source" /></td>
+			</tr>
+			<tr id="text">
+				<th>テキストを貼付け</th>
+				<td><textarea id="source" name="source"></textarea></td>
+			</tr>
+		</tbody>
+	</table>
+	<p><span class="message">「取り込み開始」ボタンを押しただけでは提出は完了していません。ログの内容を確認して、最下部の「提出」ボタンを押してください</span></p>
+</form>
+<form class="form" id="register" onsubmit="return false">
+	<input type="hidden"               name="method"   value="register" />
+	<input type="hidden" id="schema"   name="SCHEMA" />
+	<input type="hidden" id="timezone" name="timezone" value="+09" />
+	<input type="hidden" id="filename" name="filename" value="" />
+	<input type="hidden" id="status"   name="status"   value="1" />
+	<table id="import">
+		<thead>
+			<tr>
+				<th colspan="2">ログデータの取込</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>ＪＡＲＬ形式<br /><span>(R1.0, R2.0とも)</span></th>
+				<td><button id="jarl_file">ファイルから</button>
+					<button id="jarl_text">テキスト貼付</button></td>
+			</tr>
+			<tr>
+				<th>Cabrillo形式<br /><span>(2.0, 3.0とも)</span></th>
+				<td><button id="cabrillo_file">ファイルから</button>
+					<button id="cabrillo_text">テキスト貼付</button></td>
+			</tr>
+		</tbody>
+	</table>
+	<table id="summary">
+		<tbody>
+			<tr>
+				<th>参加部門</th>
+				<td colspan="3"><select id="category" name="category" onchange="onChange_Category(this);" onblur="checkCategoryDup();"></select></td>
+			</tr>
+			<tr>
+				<th>あなたのＳＷＬナンバー(またはコールサイン)</th>
+				<td id="owner" colspan="3"><input type="text" id="owner" name="owner" maxlength="12" onkeypress="return onKeyPress_Callsign(event);" onblur="onBlur_Callsign(this);checkCategoryDup();" /><br />
+					<span class="message">&quot;/4&quot;等も含めて入力ください</span></td>
+			</tr>
+			<tr>
+				<th>氏名(社団名)</th>
+				<td id="name" colspan="3"><input type="text" id="name" name="name" /></td>
+			</tr>
+			<tr>
+				<th>連絡先住所</th>
+				<td id="address" colspan="3"><input type="text" id="address" name="address" /><br />
+					<span class="message">未入力の場合、賞状をお送りすることができません</span></td>
+			</tr>
+			<tr>
+				<th>Ｅメールアドレス</th>
+				<td id="email" colspan="3"><input type="text" id="email" name="email" placeholder="例)callsign@jarl.com" /></td>
+			</tr>
+			<tr>
+				<th>コメント</th>
+				<td id="comments" colspan="3"><input type="text" id="comments" name="comments" /></td>
+			</tr>
+			<tr>
+				<th>運用者リスト</th>
+				<td id="multioplist" colspan="3"><input type="text" id="multioplist" name="multioplist" /></td>
+			</tr>
+			<tr>
+				<th>登録クラブ番号</th>
+				<td id="regclubnumber"><input type="text" id="regclubnumber" name="regclubnumber" maxlength="10" onkeypress="return onKeyPress_Regclubnumber(event);" onblur="onBlur_Regclubnumber(this);" /></td>
+				<td id="regclubname" colspan="2"></td>
+			</tr>
+			<tr>
+				<th>成績閲覧用パスワード</th>
+				<td id="password" colspan="3"><input type="password" maxlength="72" id="password1" name="password" /><br />
+					<input type="password" maxlength="72" id="password2" /><span class="message">(確認用)</span><br />
+					<span class="message">７２文字以内で同じものを２回入力してください</span><br />
+					<span class="message">未入力の場合、ご自身で照合結果を閲覧することができません</span></td>
+			</tr>
+			<tr>
+				<th>ログデータ件数</th>
+				<td id="logCount">0</td>
+				<th id="logType">ログフォーマット</th>
+				<td id="logType"></td>
+			</tr>
+		</tbody>
+	</table>
+	<table id="log">
+		<thead><tr>
+			<th id="datetime"><div id="datetime">受信日時(<span id="timezone">JST</span>)</div></th>
+			<th id="callsign">受信した<br />コールサイン</th>
+			<th id="freq">周波数帯</th>
+			<th id="mode">電波の<br />型式</th>
+			<th id="recvNumber">受信ナンバー</th>
+			<th id="sentNumber">相手方の<br />コールサイン</th>
+			<th id="button">&nbsp;</th>
+		</tr></thead>
+		<tbody>
+			<tr id="input">
+				<td class="datetime">
+					<input type="text" id="workdate" maxlength="10" onkeypress="return onKeyPress_Date(event);" onblur="onBlur_Date(this);" /><input type="text" id="worktime" maxlength="5" onkeypress="return onKeyPress_Time(event);" onblur="onBlur_Time(this);" /></td>
+				<td class="callsign"><input type="text" id="callsign" maxlength="12" onkeypress="return onKeyPress_Callsign(event);" onblur="onBlur_Callsign(this);" /></td>
+				<td class="freq"><select id="freq" onblur="onBlur_Freq(event);"></select>&nbsp;MHz</td>
+				<td class="mode"><select id="mode" onblur="onBlur_Mode(event);"></select></td>
+				<td class="recvNumber">
+					<input type="text" id="recvrst" maxlength="3" onkeypress="return onKeyPress_Rst(event);" onblur="onBlur_Rst(this);" /><input type="text" id="recvmulti" maxlength="6" onkeypress="return onKeyPress_Multi(event);" onblur="onBlur_Multi(this);" /></td>
+				<td class="sentNumber">
+					<input type="text" id="sentmulti" maxlength="10" onkeypress="return onKeyPress_Multi(event);" onblur="onBlur_Multi(this);" /><input type="hidden" id="sentrst" value="-" /></td>
+				<td><button onclick="addRow(event);" disabled="disabled">追加</button></td>
+			</tr>
+			<tr id="message">
+				<td colspan="7"><span class="message">一番下の行は登録されません。必ず「追加」ボタンを押してください</span></td>
+			</tr>
+		</tbody>
+	</table>
+	<table id="oath">
+		<tr id="replaceLog">
+			<td><input type="checkbox" id="replaceLog" /><br /><span class="message">ﾁｪｯｸ</span></td>
+			<td>既に提出されている同じ参加部門のログが削除されることに同意します</td>
+		</tr>
+	</table>
+	<button id="register">提　出</button>
+</form>
+<!-- 日付の説明 -->
+<div id="helpDate" class="helpContent">
+	<p>日付は以下のように入力できます。</p>
+	<table>
+		<thead>
+			<tr>
+				<th id="input">入力例</th>
+				<th id="converted">変換される値</th>
+				<th id="remarks">備考</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>0123</td><td>2020/01/23</td><td>年は現在の年が補完されます</td>
+			</tr>
+			<tr>
+				<td>2/28</td><td>2020/02/28</td><td>'/'を入力する場合は一桁でも可能です</td>
+			</tr>
+			<tr>
+				<td>20200201</td><td>2020/02/21</td><td>８桁で入力できます</td>
+			</tr>
+			<tr>
+				<td>2020/2/1</td><td>2020/02/01</td><td>年月は２桁に補正されます</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- 時刻の説明 -->
+<div id="helpTime" class="helpContent">
+	<p>時刻は以下のように入力できます。</p>
+	<table>
+		<thead>
+			<tr>
+				<th id="input">入力例</th>
+				<th id="converted">変換される値</th>
+				<th id="remarks">備考</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>0123</td><td>01:23</td><td>４桁で入力できます</td>
+			</tr>
+			<tr>
+				<td>2:28</td><td>02:28</td><td>':'を入力する場合は一桁でも可能です</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- コールサインの説明 -->
+<div id="helpCallsign" class="helpContent">
+	<p>小文字での入力も可能です。大文字に変換します。</p>
+</div>
+<div id="header">
+	<p>オールＪＡ４コンテスト ログアップロード</p>
+</div>
+<div id="footer"><div>
+	<h3>中国地方本部 コンテスト委員会</h3>
+</div></div>
+<!-- ダイアログ -->
+<div id="dialog"></div>
+<!-- 待機中背景 -->
+<div id="wait"></div>
+</body>
+</html>

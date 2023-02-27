@@ -1,0 +1,176 @@
+/**
+ * ログアップローダー　スタイルシート
+ * @author JJ4KME
+ */
+@charset "UTF-8";
+/* ========================================================================== */
+/* 一覧                                                                       */
+/* ========================================================================== */
+table#list {
+	border:				none;
+}
+
+table#list thead {
+	margin-right:		20px;
+}
+table#list thead th {
+	position:			relative;
+	text-align:			center;
+	color:				#FFFFFF;
+	background-color:	#215591;
+}
+
+table#list tbody {
+}
+table#list tbody td {
+	height:				30px;
+}
+
+/* チェックボックス */
+table#list thead th#check {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+}
+table#list tbody td.check {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+}
+
+/* コールサイン */
+table#list thead th#callsign {
+	width:				110px;
+	min-width:			110px;
+	max-width:			110px;
+}
+table#list tbody td.callsign {
+	width:				110px;
+	min-width:			110px;
+	max-width:			110px;
+}
+
+/* カテゴリー */
+table#list thead th#category {
+	width:				60px;
+	min-width:			60px;
+	max-width:			60px;
+}
+table#list tbody td.category {
+	width:				60px;
+	min-width:			60px;
+	max-width:			60px;
+}
+
+/* 提出日時 */
+table#list thead th#uploadtime {
+	width:				160px;
+	min-width:			160px;
+	max-width:			160px;
+}
+table#list tbody td.uploadtime {
+	text-align:			center;
+	width:				160px;
+	min-width:			160px;
+	max-width:			160px;
+}
+table#list thead th div.sortable {
+	position:			absolute;
+	right:				2px;
+	bottom:				2px;
+	width:				8px;
+	min-width:			8px;
+	max-width:			8px;
+	height:				24px;
+	min-height:			24px;
+	max-height:			24px;
+	cursor:				pointer;
+}
+table#list thead th div.sortable span {
+	position:			absolute;
+	right:				0px;
+	font-size:			8px;
+}
+table#list thead th div.sortable span.asc {
+	top:				0px;
+}
+table#list thead th div.sortable span.desc {
+	bottom:				0px;
+}
+table#list thead th div.sort_none {
+}
+table#list thead th div.sort_none span.asc {
+	color:				#AAAAAA;
+}
+table#list thead th div.sort_none span.desc {
+	color:				#AAAAAA;
+}
+table#list thead th div.sort_asc {
+}
+table#list thead th div.sort_asc span.asc {
+	color:				#FFFFFF;
+}
+table#list thead th div.sort_asc span.desc {
+	color:				#AAAAAA;
+}
+table#list thead th div.sort_desc {
+}
+table#list thead th div.sort_desc span.asc {
+	color:				#AAAAAA;
+}
+table#list thead th div.sort_desc span.desc {
+	color:				#FFFFFF;
+}
+
+/* ステータス */
+table#list thead th#status {
+	width:				140px;
+	min-width:			140px;
+	max-width:			140px;
+}
+table#list tbody td.status {
+	width:				140px;
+	min-width:			140px;
+	max-width:			140px;
+}
+
+/* ボタン */
+table#list thead th#buttons {
+	width:				220px;
+	min-width:			220px;
+	max-width:			220px;
+}
+table#list tbody td.buttons {
+	width:				220px;
+	min-width:			220px;
+	max-width:			220px;
+}
+
+/* ========================================================================== */
+/* コメント                                                                   */
+/* ========================================================================== */
+div#comment {
+	border:				solid 1px #008888;
+	border-radius:		10px;
+	margin-top:			20px;
+	padding:			10px;
+}
+
+div#comment div#body {
+	border-left:		solid 5px #215591;
+	padding-left:		5px;
+	font-size:			120%;
+}
+
+div#comment div#callsign {
+	margin-top:			5px;
+	font-style:			italic;
+}
+
+/* ========================================================================== */
+/* パスワード                                                                 */
+/* ========================================================================== */
+div#password div.modal-header {
+	color:				#FFFFFF;
+	background-color:	#215591;
+}

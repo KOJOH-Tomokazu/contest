@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<link rel="stylesheet" type="text/css" href="libs/jQuery/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="common.css" />
+<link rel="stylesheet" type="text/css" href="master.css" />
+<script src="libs/jQuery/jquery-3.6.0.js"></script>
+<script src="libs/jQuery/jquery-ui.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="common.js"></script>
+<script src="master.js"></script>
+<title>コンテスト マスターメンテナンス</title>
+</head>
+<body>
+<!-- ヘッダー -->
+<div class="navbar navbar-expand fixed-top text-white bg-primary"><div class="container-fluid ms-2 me-2">
+	<div class="collapse navbar-collapse">
+		<nav aria-label="breadcrumb" role="navigation" class="fs-3"><a href="admin.html"><span id="contest_name"></span> 管理者用</a> ＞ マスターメンテナンス</nav>
+		<ul class="navbar-nav ms-auto"><li class="nav-item dropdown">
+			<a class="nav-link bg-white rounded" href="#" role="button" id="navbarUserMenu"></a>
+		</li></ul>
+	</div>
+</div></div>
+
+<div class="container-fluid">
+	<p>タブを移動すると編集途中の内容は破棄されますので、必ず「登録」を行ってください</p>
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" role="tab" aria-selected="true"  aria-controls="categories"  href="#categories"  onclick="category_list();" >参加カテゴリと周波数帯</a></li>
+		<li class="nav-item"><a class="nav-link"        data-bs-toggle="tab" role="tab" aria-selected="false" aria-controls="duplicates"  href="#duplicates"  onclick="duplicate_list();">カテゴリーの同時提出可否</a></li>
+		<li class="nav-item"><a class="nav-link"        data-bs-toggle="tab" role="tab" aria-selected="false" aria-controls="multipliers" href="#multipliers" onclick="multi_list();"    >マルチプライヤー</a></li>
+		<li class="nav-item"><a class="nav-link"        data-bs-toggle="tab" role="tab" aria-selected="false" aria-controls="periods"     href="#periods"     onclick="period_list();"   >周波数帯ごとの交信時間帯</a></li>
+		<li class="nav-item"><a class="nav-link"        data-bs-toggle="tab" role="tab" aria-selected="false" aria-controls="modecat"     href="#modecat"     onclick="modecat_list();"  >モード区分</a></li>
+		<li class="nav-item"><a class="nav-link"        data-bs-toggle="tab" role="tab" aria-selected="false" aria-controls="clubs"       href="#clubs"       onclick="club_list();"     >登録クラブ</a></li>
+		<li class="nav-item"><a class="nav-link"        data-bs-toggle="tab" role="tab" aria-selected="false" aria-controls="prefixOrder" href="#prefixOrder" onclick="prefix_list();"   >プリフィクス表示順</a></li>
+	</ul>
+	<div class="tab-content border-start border-end border-bottom">
+	<div class="tab-pane show active" id="categories"><table class="table table-bordered w-auto" id="categories">
+		<thead><tr>
+			<th id="order">表示順</th>
+			<th id="code">コード</th>
+			<th id="name">名称</th>
+			<th id="bands">対象周波数帯</th>
+			<th id="buttons"></th>
+		</tr></thead>
+		<tbody></tbody>
+		<tfoot><tr>
+			<td id="buttons" colspan="5">
+				<button class="btn btn-primary" onclick="category_add();"   >カテゴリー追加</button>
+				<button class="btn btn-primary" onclick="category_regist();">登録</button></td>
+		</tr></tfoot>
+	</table></div>
+	<div class="tab-pane" id="duplicates">
+		<table class="table table-bordered w-auto" id="duplicates">
+			<tbody></tbody>
+		</table>
+		<button class="btn btn-primary" onclick="duplicate_regist();">登録</button>
+	</div>
+	<div class="tab-pane" id="multipliers"><table class="table table-bordered w-auto" id="multipliers">
+		<thead><tr>
+			<th id="code">コード</th>
+			<th id="name">名称</th>
+			<th id="point">点数</th>
+			<th id="categories">有効カテゴリー</th>
+			<th id="buttons"></th>
+		</tr></thead>
+		<tbody></tbody>
+		<tfoot><tr>
+			<td colspan="5">
+				<button class="btn btn-primary" onclick="multi_add();"   >マルチプライヤ追加</button>
+				<button class="btn btn-primary" onclick="multi_regist();">登録</button></td>
+		</tr></tfoot>
+	</table></div>
+	<div class="tab-pane" id="periods"><table class="table table-bordered w-auto" id="periods">
+		<thead><tr>
+			<th id="band">周波数帯</th>
+			<th id="startTime">開始日時</th>
+			<th id="endTime">終了日時</th>
+		</tr></thead>
+		<tbody></tbody>
+		<tfoot><tr>
+			<td id="buttons" colspan="3">
+				<button class="btn btn-primary" onclick="period_regist();">登録</button></td>
+		</tr></tfoot>
+	</table></div>
+	<div class="tab-pane" id="modecat"><table class="table table-bordered w-auto" id="modecat">
+		<thead><tr>
+			<th id="mode">モード表記</th>
+			<th id="category">分類</th>
+			<th id="disp">表示有無</th>
+			<th id="buttons"></th>
+		</tr></thead>
+		<tbody></tbody>
+		<tfoot><tr>
+			<td id="buttons" colspan="4">
+				<button class="btn btn-primary" onclick="modecat_add();"   >分類追加</button>
+				<button class="btn btn-primary" onclick="modecat_regist();">登録</button></td>
+		</tr></tfoot>
+	</table></div>
+	<div class="tab-pane" id="clubs"><table class="table table-bordered w-auto" id="clubs">
+		<thead><tr>
+			<th id="number">登録番号</th>
+			<th id="name">名称</th>
+			<th id="buttons"></th>
+		</tr></thead>
+		<tbody></tbody>
+		<tfoot><tr>
+			<td id="buttons" colspan="3">
+				<button class="btn btn-primary" onclick="club_add();"   >登録クラブ追加</button>
+				<button class="btn btn-primary" onclick="club_regist();">登録</button></td>
+		</tr></tfoot>
+	</table></div>
+	<div class="tab-pane" id="prefixOrder"><table class="table table-bordered w-auto" id="prefixOrder">
+		<thead><tr>
+			<th id="order">表示順</th>
+			<th id="prefix">ﾌﾟﾘﾌｨｸｽ</th>
+			<th id="buttons"></th>
+		</tr></thead>
+		<tbody></tbody>
+		<tfoot><tr>
+			<td id="buttons" colspan="3">
+				<button class="btn btn-primary" onclick="prefix_add();"   >プリフィクス追加</button>
+				<button class="btn btn-primary" onclick="prefix_regist();">登録</button></td>
+		</tr></tfoot>
+	</table></div>
+	</div>
+</div>
+
+<!-- 待機中背景 -->
+<div id="wait"></div>
+<!-- ユーザー情報ダイアログ -->
+<div id="administrator"><table><tbody>
+	<tr>
+		<th>コールサイン</th>
+		<td><input type="text" id="user_id"   placeholder="コールサイン" /></td>
+	</tr>
+	<tr>
+		<th>名前</th>
+		<td><input type="text" id="user_name" placeholder="名前" /></td>
+	</tr>
+	<tr>
+		<th>ステータス</th>
+		<td><select id="user_div">
+			<option value="1">有効</option>
+			<option value="0">無効</option>
+		</select></td>
+	</tr>
+	<tr>
+		<th>現在のパスワード</th>
+		<td><input type="password" id="pass_old"  placeholder="現在のパスワード" /></td>
+	</tr>
+	<tr>
+		<th>新しいパスワード</th>
+		<td><input type="password" id="pass_new1" placeholder="新しいパスワード" /><br />
+			<input type="password" id="pass_new2" placeholder="新しいパスワード(確認入力)" /></td>
+	</tr>
+</tbody></table></div>
+</body>
+</html>

@@ -1,0 +1,315 @@
+@charset "UTF-8";
+
+/* ========================================================================== */
+/* 詳細表示                                                                   */
+/* ========================================================================== */
+body {
+	padding:			0px;
+	overflow:			scroll;
+}
+table.table thead th {
+	text-align:			center;
+	color:				#FFFFFF;
+	background-color:	#215591;
+}
+
+/* -------------------------------------------------------------------------- */
+/* サマリー                                                                   */
+/* -------------------------------------------------------------------------- */
+table#summary {
+	table-layout:		fixed;
+	margin-bottom:		20px;
+}
+
+/* コールサイン */
+table#summary thead th#owner {
+	width:				122px;
+	min-width:			122px;
+	max-width:			122px;
+}
+table#summary tbody td#owner {
+}
+
+/* カテゴリー */
+table#summary thead th#category {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#summary tbody td#category {
+}
+
+/* QSO数 */
+table#summary thead th#numsqo {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#summary tbody td#numsqo {
+	text-align:			right;
+}
+
+/* 点数 */
+table#summary thead th#point {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#summary tbody td#point {
+	text-align:			right;
+}
+
+/* マルチ */
+table#summary thead th#multi {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#summary tbody td#multi {
+	text-align:			right;
+}
+
+/* 得点 */
+table#summary thead th#total {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#summary tbody td#total {
+	text-align:			right;
+}
+
+/* -------------------------------------------------------------------------- */
+/* エラー詳細                                                                 */
+/* -------------------------------------------------------------------------- */
+table#errors {
+	table-layout:		fixed;
+	margin-bottom:		20px;
+}
+
+/* エラーコード */
+table#errors thead th#code {
+}
+table#errors tbody td.code {
+	text-align:			center;
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+}
+
+/* エラー詳細 */
+table#errors thead th#desc {
+}
+table#errors tbody td.desc {
+	width:				300px;
+	min-width:			300px;
+	max-width:			300px;
+}
+
+/* 件数 */
+table#errors thead th#count {
+	width:				40px;
+	min-width:			40px;
+	max-width:			40px;
+	line-height:		100%;
+}
+table#errors tbody td.count {
+	text-align:			right;
+}
+
+/* -------------------------------------------------------------------------- */
+/* スコア                                                                     */
+/* -------------------------------------------------------------------------- */
+table#scores {
+	table-layout:		fixed;
+	margin-right:		20px;
+	float:				left;
+}
+
+/* 周波数帯 */
+table#scores thead th#band {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+}
+table#scores tbody td.band {
+	text-align:			right;
+}
+
+/* QSO数 */
+table#scores thead th#numsqo {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#scores tbody td.numsqo {
+	text-align:			right;
+}
+
+/* 点数 */
+table#scores thead th#point {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#scores tbody td.point {
+	text-align:			right;
+}
+
+/* マルチ */
+table#scores thead th#multi {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#scores tbody td.multi {
+	text-align:			right;
+}
+
+/* 得点 */
+table#scores thead th#total {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#scores tbody td.total {
+	text-align:			right;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 運用者リスト                                                               */
+/* -------------------------------------------------------------------------- */
+table#oplist {
+	table-layout:		fixed;
+	clear:				both;
+	width:				803px;
+	min-width:			803px;
+	max-width:			803px;
+	margin-bottom:		20px;
+}
+table#oplist tbody td {
+	height:				16px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* コメント                                                                   */
+/* -------------------------------------------------------------------------- */
+table#comments {
+	table-layout:		fixed;
+	clear:				both;
+	width:				803px;
+	min-width:			803px;
+	max-width:			803px;
+	margin-bottom:		20px;
+}
+table#comments tbody td {
+	height:				16px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* ログ                                                                       */
+/* -------------------------------------------------------------------------- */
+table#body {
+	table-layout:		fixed;
+	margin-bottom:		20px;
+}
+
+/* 交信日時 */
+table#body thead th#datetime {
+	width:				130px;
+	min-width:			130px;
+	max-width:			130px;
+}
+table#body tbody td.datetime {
+}
+table#body tbody td.datetime span {
+	display:			inline-block;
+}
+
+/* コールサイン */
+table#body thead th#callsign {
+	width:				120px;
+	min-width:			120px;
+	max-width:			120px;
+	line-height:		100%;
+}
+table#body tbody td.callsign {
+}
+
+/* 周波数 */
+table#body thead th#freq {
+	width:				90px;
+	min-width:			90px;
+	max-width:			90px;
+	line-height:		100%;
+}
+table#body tbody td.freq {
+	text-align:			center;
+}
+
+/* 電波の型式 */
+table#body thead th#mode {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+	line-height:		100%;
+}
+table#body tbody td.mode {
+	text-align:			center;
+}
+
+/* 送受信ナンバー */
+table#body thead th.number {
+	width:				110px;
+	min-width:			110px;
+	max-width:			110px;
+}
+table#body tbody td.number {
+}
+table#body tbody td.number span.rst {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+	display:			inline-block;
+}
+table#body tbody td.number span.multi {
+}
+
+/* マルチ */
+table#body thead th#multi {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#body tbody td.multi {
+}
+
+/* 点数 */
+table#body thead th#point {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+	line-height:		100%;
+}
+table#body tbody td.point {
+	text-align:			center;
+}
+
+/* エラー詳細 */
+table#body thead th#error {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+	line-height:		100%;
+}
+table#body tbody td.error {
+}
+
+input#fixScore {
+	display:			none;
+	margin-top:			20px;
+}
+input#close {
+	display:			none;
+	margin-top:			20px;
+}

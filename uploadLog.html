@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="libs/jQuery/jquery-ui.css" />
+<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="uploadLog.css" />
+<script src="libs/jQuery/jquery.js"></script>
+<script src="libs/jQuery/jquery-ui.js"></script>
+<script src="libs/bootstrap/js/bootstrap.js"></script>
+<script src="common.js"></script>
+<script src="uploadLog.js"></script>
+<title></title>
+</head>
+<body>
+<p id="message"></p>
+<p>zLog令和版、zLog令和版ALL形式への対応が完了しております。<br />
+どうしてもうまく取り込めない場合は、jj4kme@gmail.com まで連絡をお願いします</p>
+<p>zLog令和版への対応に伴い、旧来のzLogで作成されたログフォーマットは「非対応」となります、ご容赦ください SRY</p>
+<p>コンテストのサマリーとログはこちらからアップロードをお願いします<br />
+サマリーとログを入力後、「提出」ボタンを押してください<br />
+作成済みのファイルやテキストデータを取り込むこともできます</p>
+<br />
+<p>ログの提出手順</p>
+<ol>
+<li>ファイル形式とアップロード方法に応じて「ログデータの取込」覧のボタンを押す</li>
+<li>「ログのタイムゾーン」を選択</li>
+<li>データをテキストファイルに保存してある場合はファイルをアップロード、テキストデータを貼り付ける場合は「テキストを貼付け」の欄に貼り付け</li>
+<li>「取込」ボタンを押す</li>
+<li>下段の「参加部門」以下に取り込んだ内容が表示されるので、内容に間違いが無いかを確認</li>
+<li>「提出」ボタンを押す</li>
+</ol>
+
+<!-- ログデータの取込ダイアログ -->
+<div id="import" class="modal" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"><div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content">
+	<div class="modal-header bg-primary text-white"><span class="modal-title">ログデータの取込</span></div>
+	<div class="modal-body"><form class="form" id="import">
+		<input type="hidden" id="schema"   name="SCHEMA"   />
+		<input type="hidden" id="fileType" name="fileType" />
+		<input type="hidden" id="method"   name="method"   />
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<th>フォーマット</th>
+					<td id="fileType"></td>
+				</tr>
+				<tr>
+					<th>ログのタイムゾーン</th>
+					<td><label><input class="form-check-input" type="radio" name="timezone" id="timezone_jst" value="+09" />ＪＳＴ</label>&nbsp;
+						<label><input class="form-check-input" type="radio" name="timezone" id="timezone_utc" value="+00" />ＵＴＣ</label><br />
+						<span class="message">間違えると相手側のログと照合できなくなりますのでご注意</span></td>
+				</tr>
+				<tr id="file">
+					<th>ファイルをアップロード</th>
+					<td><input class="form-control" type="file" id="source" name="source" /></td>
+				</tr>
+				<tr id="text">
+					<th>テキストを貼付け</th>
+					<td><textarea class="form-control" id="source" name="source"></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+		<p><span class="message">「取込開始」ボタンを押しただけでは提出は完了していません。ログの内容を確認して、最下部の「提出」ボタンを押してください</span></p>
+	</form></div>
+	<div class="modal-footer">
+		<button class="btn btn-danger"  id="start_import">取込開始</button>
+		<button class="btn btn-primary" id="cancel_import">キャンセル</button>
+	</div>
+</div></div></div>
+
+<div class="card">
+	<div class="card-header">ログデータの取込</div>
+	<div class="card-body">
+		<p>既に作成されているサマリーやログのデータを取り込む場合は、ファイルの形式と送信方法に従って以下のボタンを押してください</p>
+		<table class="table table-bordered w-auto" id="import">
+			<thead>
+				<tr>
+					<th colspan="2">ログデータの取込</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>ＪＡＲＬ形式<br /><span>(R1.0, R2.0とも)</span></th>
+					<td><button class="btn btn-primary" id="jarl_file">ファイルから取込</button>
+						<button class="btn btn-primary" id="jarl_text">テキスト貼付</button></td>
+				</tr>
+				<tr>
+					<th>Cabrillo形式<br /><span>(2.0, 3.0とも)</span></th>
+					<td><button class="btn btn-primary" id="cabrillo_file">ファイルから取込</button>
+						<button class="btn btn-primary" id="cabrillo_text">テキスト貼付</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="card">
+	<div class="card-header">サマリー</div>
+	<div class="card-body"><table class="table table-bordered w-auto" id="summary">
+		<tbody>
+			<tr>
+				<th>参加部門</th>
+				<td colspan="3"><select class="form-select" id="category" name="category" onchange="onChange_Category(this);" onblur="checkCategoryDup();"></select></td>
+			</tr>
+			<tr>
+				<th>運用したコールサイン</th>
+				<td id="owner" colspan="3"><input class="form-control" type="text" id="owner" name="owner" maxlength="12" onkeypress="return onKeyPress_Callsign(event);" onblur="onBlur_Callsign(this);checkCategoryDup();" />
+					<span class="message">&quot;/4&quot;等も含めて入力ください</span></td>
+			</tr>
+			<tr>
+				<th>氏名(社団名)</th>
+				<td id="name" colspan="3"><input class="form-control" type="text" id="name" name="name" /></td>
+			</tr>
+			<tr>
+				<th>連絡先住所</th>
+				<td id="address" colspan="3"><input class="form-control" type="text" id="address" name="address" />
+					<span class="message">未入力の場合、賞状をお送りすることができません</span></td>
+			</tr>
+			<tr>
+				<th>Ｅメールアドレス</th>
+				<td id="email" colspan="3"><input class="form-control" type="text" id="email" name="email" placeholder="例)callsign@jarl.com" /></td>
+			</tr>
+			<tr>
+				<th>コメント</th>
+				<td id="comments" colspan="3"><input class="form-control" type="text" id="comments" name="comments" /></td>
+			</tr>
+			<tr>
+				<th>運用者リスト</th>
+				<td id="multioplist" colspan="3"><input class="form-control" type="text" id="multioplist" name="multioplist" /></td>
+			</tr>
+			<tr>
+				<th>登録クラブ番号</th>
+				<td id="regclubnumber"><input class="form-control" type="text" id="regclubnumber" name="regclubnumber" maxlength="10" onkeypress="return onKeyPress_Regclubnumber(event);" onblur="onBlur_Regclubnumber(this);" /></td>
+				<td class="align-middle" id="regclubname" colspan="2"></td>
+			</tr>
+			<tr>
+				<th>成績閲覧用パスワード</th>
+				<td id="password" colspan="3">
+					<div class="row g-0">
+						<div class="col-9">
+							<input class="form-control" type="password" maxlength="72" id="password1" name="password" />
+						</div>
+					</div>
+					<div class="row g-0">
+						<div class="col-9">
+							<input class="form-control" type="password" maxlength="72" id="password2" />
+						</div>
+						<div class="col-3"><span class="message">(確認用)</span></div>
+					</div>
+					<span class="message">７２文字以内で同じものを２回入力してください<br />未入力の場合、ご自身で照合結果を閲覧することができません</span></td>
+			</tr>
+			<tr>
+				<th>ログデータ件数</th>
+				<td id="logCount">0</td>
+				<th id="logType">ログフォーマット</th>
+				<td id="logType"></td>
+			</tr>
+		</tbody>
+	</table></div>
+</div>
+
+<div class="card">
+	<div class="card-header">ログ</div>
+	<div class="card-body"><table class="table table-bordered w-auto" id="log">
+		<thead><tr>
+			<th id="datetime"><div id="datetime">交信日時(<span id="timezone">JST</span>)</div></th>
+			<th id="callsign">相手の<br />コールサイン</th>
+			<th id="freq">周波数帯</th>
+			<th id="mode">電波の型式</th>
+			<th id="sentNumber">送信ナンバー</th>
+			<th id="recvNumber">受信ナンバー</th>
+			<th id="button">&nbsp;</th>
+		</tr></thead>
+		<tbody>
+			<tr id="input">
+				<td class="datetime"><div class="row g-0">
+					<div class="col-7">
+						<input class="form-control" type="text" id="workdate" maxlength="10" onkeypress="return onKeyPress_Date(event);" onblur="onBlur_Date(this);" />
+					</div>
+					<div class="col-5">
+						<input class="form-control" type="text" id="worktime" maxlength="5" onkeypress="return onKeyPress_Time(event);" onblur="onBlur_Time(this);" />
+					</div>
+				</div></td>
+				<td class="callsign"><input class="form-control" type="text" id="callsign" maxlength="12" onkeypress="return onKeyPress_Callsign(event);" onblur="onBlur_Callsign(this);" /></td>
+				<td class="freq"><div class="input-group">
+					<select class="form-select" id="freq" onblur="onBlur_Freq(event);"></select>
+					<span class="input-group-text">&nbsp;MHz</span>
+				</div></td>
+				<td class="mode"><select class="form-select" id="mode" onblur="onBlur_Mode(event);"></select></td>
+				<td class="sentNumber"><div class="row g-0">
+					<div class="col-4">
+						<input class="form-control" type="text" id="sentrst" maxlength="3" onkeypress="return onKeyPress_Rst(event);" onblur="onBlur_Rst(this);" />
+					</div>
+					<div class="col-8">
+						<input class="form-control" type="text" id="sentmulti" maxlength="6" onkeypress="return onKeyPress_Multi(event);" onblur="onBlur_Multi(this);" />
+					</div>
+				</div></td>
+				<td class="recvNumber"><div class="row g-0">
+					<div class="col-4">
+						<input class="form-control" type="text" id="recvrst" maxlength="3" onkeypress="return onKeyPress_Rst(event);" onblur="onBlur_Rst(this);" />
+					</div>
+					<div class="col-8">
+						<input class="form-control" type="text" id="recvmulti" maxlength="6" onkeypress="return onKeyPress_Multi(event);" onblur="onBlur_Multi(this);" />
+					</div>
+				</div></td>
+				<td><button class="btn btn-sm btn-primary" onclick="addRow(event);" disabled="disabled">追加</button></td>
+			</tr>
+			<tr id="message">
+				<td colspan="7"><span class="message">一番下の行は登録されません。必ず「追加」ボタンを押してください</span></td>
+			</tr>
+		</tbody>
+	</table></div>
+</div>
+
+<form class="form" id="register" onsubmit="return false">
+	<input type="hidden"               name="method"   value="register" />
+	<input type="hidden" id="schema"   name="SCHEMA" />
+	<input type="hidden" id="timezone" name="timezone" value="+09" />
+	<input type="hidden" id="filename" name="filename" value="" />
+	<input type="hidden" id="status"   name="status"   value="1" />
+	<table id="oath">
+		<tr id="replaceLog">
+			<td><input class="form-check-input" type="checkbox" id="replaceLog" /><br /><span class="message">ﾁｪｯｸ</span></td>
+			<td>既に提出されている同じ参加部門のログが削除されることに同意します</td>
+		</tr>
+	</table>
+	<button class="btn btn-danger" id="register">提　出</button>
+</form>
+<!-- 日付の説明 -->
+<div id="helpDate" class="helpContent">
+	<p>日付は以下のように入力できます。</p>
+	<table>
+		<thead>
+			<tr>
+				<th id="input">入力例</th>
+				<th id="converted">変換される値</th>
+				<th id="remarks">備考</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>0123</td><td>2020/01/23</td><td>年は現在の年が補完されます</td>
+			</tr>
+			<tr>
+				<td>2/28</td><td>2020/02/28</td><td>'/'を入力する場合は一桁でも可能です</td>
+			</tr>
+			<tr>
+				<td>20200201</td><td>2020/02/21</td><td>８桁で入力できます</td>
+			</tr>
+			<tr>
+				<td>2020/2/1</td><td>2020/02/01</td><td>年月は２桁に補正されます</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- 時刻の説明 -->
+<div id="helpTime" class="helpContent">
+	<p>時刻は以下のように入力できます。</p>
+	<table>
+		<thead>
+			<tr>
+				<th id="input">入力例</th>
+				<th id="converted">変換される値</th>
+				<th id="remarks">備考</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>0123</td><td>01:23</td><td>４桁で入力できます</td>
+			</tr>
+			<tr>
+				<td>2:28</td><td>02:28</td><td>':'を入力する場合は一桁でも可能です</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- コールサインの説明 -->
+<div id="helpCallsign" class="helpContent">
+	<p>小文字での入力も可能です。大文字に変換します。</p>
+</div>
+<div id="header">
+	<p><span id="title"></span> ログアップロード</p>
+</div>
+<!-- ダイアログ -->
+<div id="dialog"></div>
+<!-- 待機中背景 -->
+<div id="wait"></div>
+</body>
+</html>

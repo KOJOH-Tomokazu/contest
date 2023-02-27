@@ -1,0 +1,175 @@
+@charset "UTF-8";
+
+@media print {
+	div#header {
+		position:			static;
+	}
+	div#footer {
+		position:			static;
+		margin-top:			20px;
+	}
+	body {
+		padding-top:		0px;
+		padding-bottom:		0px;
+	}
+
+	table {
+		page-break-inside:	avoid;
+	}
+	table th {
+		color:				#000000;
+		background-color:	#CCFFFF;
+		border-color:		#CCCCCC;
+	}
+	table td {
+		border-color:		#CCCCCC;
+	}
+}
+
+body {
+}
+
+table#all {
+	margin-top:			20px;
+	table-layout:		fixed;
+}
+
+table#all thead th {
+	text-align:			center;
+}
+table#all thead th.category_name {
+	text-align:			center;
+	font-size:			150%;
+}
+
+/* 順位 */
+table#all thead th.rank {
+	width:				40px;
+	min-width:			40px;
+	max-width:			40px;
+}
+table#all tbody td.rank {
+	text-align:			center;
+}
+table#all tbody td.prise {
+	color:				#000000;
+	background-color:	#FFFF00;
+	font-weight:		bold;
+}
+
+/* コールサイン */
+table#all thead th.callsign {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+}
+table#all tbody td.callsign {
+}
+
+/* ＱＳＯ数 */
+table#all thead th.numqso {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#all tbody td.numqso {
+	text-align:			right;
+}
+
+/* 点数 */
+table#all thead th.point {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#all tbody td.point {
+	text-align:			right;
+}
+
+/* マルチ */
+table#all thead th.multi {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#all tbody td.multi {
+	text-align:			right;
+}
+
+/* 得点 */
+table#all thead th.score {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#all tbody td.score {
+	text-align:			right;
+}
+
+/* 最終交信時刻 */
+table#all thead th.lasttime {
+	width:				120px;
+	min-width:			120px;
+	max-width:			120px;
+}
+table#all tbody td.lasttime {
+	text-align:			center;
+}
+
+
+table#club {
+	margin-top:			20px;
+	table-layout:		fixed;
+}
+
+table#club thead th {
+	text-align:			center;
+}
+table#club thead th#category_name {
+	text-align:			center;
+	font-size:			150%;
+}
+
+/* 順位 */
+table#club thead th#rank {
+	width:				40px;
+	min-width:			40px;
+	max-width:			40px;
+}
+table#club tbody td.rank {
+	text-align:			center;
+}
+table#club tbody td.prise {
+	color:				#000000;
+	background-color:	#FFFF00;
+	font-weight:		bold;
+}
+
+/* 登録番号 */
+table#club thead th#number {
+	width:				90px;
+	min-width:			90px;
+	max-width:			90px;
+}
+table#club tbody td.number {
+	text-align:			center;
+}
+
+/* クラブ名 */
+table#club thead th#name {
+	width:				243px;
+	min-width:			243px;
+	max-width:			243px;
+}
+table#club tbody td.name {
+}
+
+/* 得点 */
+table#club thead th#score {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#club tbody td.score {
+	text-align:			right;
+}

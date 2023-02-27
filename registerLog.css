@@ -1,0 +1,348 @@
+/**
+ * ログデータの手動登録　スタイルシート
+ * @author JJ4KME
+ */
+@charset "UTF-8";
+/* ========================================================================== */
+/* 全体                                                                       */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/* サマリー選択                                                               */
+/* ========================================================================== */
+table#summary {
+	margin-top:			20px;
+}
+
+table#summary th {
+	padding:			1px;
+}
+
+table#summary td {
+	padding:			1px;
+}
+
+/* コールサイン */
+table#summary thead th#owner {
+	width:				160px;
+	min-width:			160px;
+	max-width:			160px;
+}
+table#summary tbody td#owner {
+}
+
+/* カテゴリー */
+table#summary thead th#sumid {
+	width:				400px;
+	min-width:			400px;
+	max-width:			400px;
+}
+table#summary tbody td#sumid {
+}
+
+/* 参考ファイル */
+table#summary thead th#filename {
+	width:				395px;
+	min-width:			395px;
+	max-width:			395px;
+}
+table#summary tbody td#filename {
+}
+table#summary tbody td#filename form {
+	display:			inline-block;
+}
+
+/* ボタン列 */
+table#summary thead th#buttons {
+	width:				180px;
+	min-width:			180px;
+	max-width:			180px;
+}
+table#summary tbody td#buttons {
+}
+
+/* 登録クラブ番号 */
+table#summary tbody input#regclubnumber {
+	width:				120px;
+	min-width:			120px;
+	max-width:			120px;
+}
+
+/* ========================================================================== */
+/* ログデータ                                                                 */
+/* ========================================================================== */
+table#log {
+}
+
+table#log thead th {
+	text-align:			center;
+	line-height:		100%;
+}
+table#log tfoot td {
+	padding:			1px;
+}
+
+/* 交信日時 */
+table#log thead th#datetime {
+	width:				180px;
+	min-width:			180px;
+	max-width:			180px;
+}
+table#log tbody td.datetime {
+}
+
+table#log tbody td.datetime span.workdate {
+	margin-right:		5px;
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#log tfoot td.datetime input.workdate {
+}
+
+table#log tbody td.datetime span.worktime {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#log tfoot td.datetime input.worktime {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+
+/* コールサイン */
+table#log thead th#callsign {
+	width:				140px;
+	min-width:			140px;
+	max-width:			140px;
+}
+
+table#log tfoot td.callsign {
+}
+
+/* 周波数帯 */
+table#log thead th#freq {
+	width:				160px;
+	min-width:			160px;
+	max-width:			160px;
+}
+
+table#log tbody td.freq {
+	text-align:			right;
+}
+
+table#log tfoot td.freq {
+	text-align:			right;
+}
+
+table#log tfoot td.freq select {
+	text-align:			right;
+}
+
+/* 電波の型式 */
+table#log thead th#mode {
+	width:				120px;
+	min-width:			120px;
+	max-width:			120px;
+}
+
+table#log tbody td.mode {
+	text-align:			center;
+}
+
+table#log tfoot td.mode {
+	text-align:			center;
+}
+
+/* 送信ナンバー */
+table#log thead th#sentNumber {
+	width:				140px;
+	min-width:			140px;
+	max-width:			140px;
+}
+
+table#log tbody td.sentNumber {
+}
+
+table#log tfoot td.sentNumber {
+}
+
+table#log tbody td.sentNumber span.sentrst {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+	margin-right:		5px;
+}
+table#log tfoot td.sentNumber input.sentrst {
+	width:				50px;
+	min-width:			50px;
+	max-width:			50px;
+}
+
+table#log tbody td.sentNumber span.sentmulti {
+	width:				60px;
+	min-width:			60px;
+	max-width:			60px;
+}
+table#log tfoot td.sentNumber input.sentmulti {
+}
+
+/* 受信ナンバー */
+table#log thead th#recvNumber {
+	width:				140px;
+	min-width:			140px;
+	max-width:			140px;
+}
+
+table#log tbody td.recvNumber {
+}
+
+table#log tfoot td.recvNumber {
+}
+
+table#log tbody td.recvNumber span.recvrst {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+	margin-right:		5px;
+}
+table#log tfoot td.recvNumber input.recvrst {
+	width:				50px;
+	min-width:			50px;
+	max-width:			50px;
+}
+
+table#log tbody td.recvNumber span.recvmulti {
+	width:				60px;
+	min-width:			60px;
+	max-width:			60px;
+}
+table#log tfoot td.recvNumber input.recvmulti {
+}
+
+/* 入力者 */
+table#log thead th#input_id {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+}
+table#log tbody td.input_id {
+}
+
+/* 確認者 */
+table#log thead th#verify_id {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+}
+table#log tbody td.verify_id {
+}
+
+/* 点数 */
+table#log thead th#point {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+}
+
+table#log tbody td.point {
+	text-align:			center;
+}
+
+/* エラー詳細 */
+table#log thead th#error {
+	width:				227px;
+	min-width:			227px;
+	max-width:			227px;
+}
+
+table#log tbody td.error {
+}
+
+table#log td.button input {
+	width:				auto;
+}
+
+/* ========================================================================== */
+/* サマリー作成                                                               */
+/* ========================================================================== */
+div#newSummary {
+	display:			none;
+}
+div#newSummary table th {
+	width:				160px;
+	min-width:			160px;
+	max-width:			160px;
+}
+
+/* 登録クラブ番号 */
+div#newSummary table td#regclubnumber {
+	width:				90px;
+	min-width:			90px;
+	max-width:			90px;
+}
+
+/* 登録クラブ名称 */
+div#newSummary table td#regclubname {
+	width:				230px;
+	min-width:			230px;
+	max-width:			230px;
+}
+
+/* ========================================================================== */
+/* 入力ヘルプ                                                                 */
+/* ========================================================================== */
+div.helpContent {
+	display:			none;
+	width:				400px;
+	min-width:			400px;
+	max-width:			400px;
+	height:				400px;
+	position:			absolute;
+	padding:			10px;
+	border:				solid 2px #CCCCFF;
+	border-radius:		5px;
+	background:			#FFFFFF;
+}
+
+div.helpContent table thead th#input {
+	width:				60px;
+	min-width:			60px;
+	max-width:			60px;
+}
+
+div.helpContent table tbody td.input {
+
+}
+
+div.helpContent table thead th#converted {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+}
+
+div.helpContent table tbody td.converted {
+
+}
+
+div.helpContent table thead th#remarks {
+	width:				200px;
+	min-width:			200px;
+	max-width:			200px;
+}
+
+div.helpContent table tbody td.remarks {
+
+}
+
+div#source {
+	display:			none;
+	overflow:			hidden;
+}
+
+div#source iframe {
+	width:				100%;
+	height:				100%;
+	border:				none;
+}

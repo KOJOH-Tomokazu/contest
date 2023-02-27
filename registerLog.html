@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<link rel="stylesheet" href="libs/jQuery/jquery-ui.css" />
+<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="registerLog.css" />
+<script src="libs/jQuery/jquery.js"></script>
+<script src="libs/jQuery/jquery-ui.js"></script>
+<script src="libs/bootstrap/js/bootstrap.js"></script>
+<script src="common.js"></script>
+<script src="registerLog.js"></script>
+<title>オールＪＡ４コンテスト ログデータの手動登録</title>
+</head>
+<body>
+<!-- ヘッダー -->
+<div class="navbar navbar-expand fixed-top text-white bg-primary"><div class="container-fluid ms-2 me-2">
+	<div class="collapse navbar-collapse">
+		<nav aria-label="breadcrumb" role="navigation" class="fs-3"><span id="contest_name"></span> ログデータの手動登録</nav>
+	</div>
+</div></div>
+
+<table class="table table-bordered w-auto" id="summary">
+	<thead><tr>
+		<th id="owner">コールサイン</th>
+		<th id="sumid">参加部門</th>
+		<th id="filename">参考ファイル</th>
+		<th id="buttons"></th>
+	</tr></thead>
+	<tbody>
+		<tr>
+			<td id="owner">
+				<select class="form-select" id="filter" onchange="getSummaries();">
+					<option value="">全て</option>
+					<option value="empty">ログ未入力</option>
+					<option value="verify">未確認あり</option>
+				</select>
+				<select class="form-select" id="owner" onchange="onChangeOwner(event);"></select></td>
+			<td class="align-middle" id="sumid">
+				<select class="form-select" id="sumid" onchange="readLog(event.target.value)"></select>
+			</td>
+			<td class="align-middle" id="filename"></td>
+			<td class="align-middle" id="buttons">
+				<button class="btn btn-sm btn-primary pe-1" onclick="showNewSummary();">新規作成</button>
+				<button class="btn btn-sm btn-danger" id="deleteSummary" disabled="disabled">削除</button>
+			</td>
+		</tr>
+		<tr>
+			<th class="align-middle">氏名(代表者名)</th>
+			<td colspan="3"><input type="text" class="form-control" id="name" /></td>
+		</tr>
+		<tr>
+			<th class="align-middle">連絡先住所</th>
+			<td colspan="3"><input type="text" class="form-control" id="address" /></td>
+		</tr>
+		<tr>
+			<th class="align-middle">Ｅメールアドレス</th>
+			<td colspan="3"><input type="text" class="form-control" id="email" /></td>
+		</tr>
+		<tr>
+			<th class="align-middle">運用者リスト</th>
+			<td colspan="3"><input type="text" class="form-control" id="multioplist" /></td>
+		</tr>
+		<tr>
+			<th class="align-middle">コメント</th>
+			<td colspan="3"><input type="text" class="form-control" id="comments" /></td>
+		</tr>
+		<tr>
+			<th class="align-middle">登録クラブ番号</th>
+			<td colspan="2"><div class="input-group">
+				<input type="text" class="form-control" id="regclubnumber" onkeypress="return onKeyPress_Regclubnumber(event);" onblur="onBlur_Regclubnumber(this);" /><input type="text" class="form-control" id="regclubname" readonly="readonly" />
+			</div></td>
+			<td rowspan="2"><button class="btn btn-sm btn-primary" id="updateSummary" onclick="updateSummary();" disabled="disabled">サマリー更新</button></td>
+		</tr>
+		<tr>
+			<th class="align-middle">パスワード</th>
+			<td id="password" colspan="2"></td>
+		</tr>
+	</tbody>
+</table>
+<table class="table table-bordered w-auto" id="log">
+	<thead><tr>
+		<th id="datetime">交信日時(<span id="timezone">JST</span>)</th>
+		<th id="callsign">相手の<br />コールサイン</th>
+		<th id="freq">周波数帯</th>
+		<th id="mode">電波の型式</th>
+		<th id="sentNumber">送信ナンバー</th>
+		<th id="recvNumber">受信ナンバー</th>
+		<th id="input_id">入力者</th>
+		<th id="verify_id">確認者</th>
+		<th id="point">点<br />数</th>
+		<th id="error">エラー詳細</th>
+	</tr></thead>
+	<tbody></tbody>
+	<tfoot>
+		<tr id="input">
+			<td class="datetime"><div class="input-group">
+				<input type="text" class="form-control workdate" maxlength="10" onkeypress="return onKeyPressDate(event);" onblur="onBlurDate(event);" />
+				<input type="text" class="form-control worktime" maxlength="5"  onkeypress="return onKeyPressTime(event);" onblur="onBlurTime(event);" />
+			</div></td>
+			<td class="callsign">
+				<input type="text" class="form-control" id="callsign" maxlength="12" onkeypress="return onKeyPressCallsign(event);" onblur="onBlurCallsign(event);" />
+			</td>
+			<td class="freq"><div class="input-group">
+				<select class="form-select" id="freq" onblur="onBlurFreq(event);"></select>
+				<span class="input-group-text">MHz</span>
+			</div></td>
+			<td class="mode">
+				<select class="form-select" id="mode" onblur="onBlurMode(event);"></select>
+			</td>
+			<td class="sentNumber"><div class="input-group">
+				<input type="text" class="form-control sentrst"   maxlength="3"  onkeypress="return onKeyPressRst(event);"   onblur="onBlurRst(event);" />
+				<input type="text" class="form-control sentmulti" maxlength="10" onkeypress="return onKeyPressMulti(event);" onblur="onBlurMulti(event);" />
+			</div></td>
+			<td class="recvNumber"><div class="input-group">
+				<input type="text" class="form-control recvrst"   maxlength="3"  onkeypress="return onKeyPressRst(event);"   onblur="onBlurRst(event);" />
+				<input type="text" class="form-control recvmulti" maxlength="10" onkeypress="return onKeyPressMulti(event);" onblur="onBlurMulti(event);" />
+			</div></td>
+			<td colspan="4" class="button">
+				<button class="btn btn-sm btn-primary" onclick="appendLog(event);" disabled="disabled">追加</button>
+			</td>
+		</tr>
+		<tr id="message">
+			<td colspan="10"><span class="message">一番下の行は登録されません。必ず「追加」ボタンを押してください</span></td>
+		</tr>
+	</tfoot>
+</table>
+<!-- サマリーの作成 -->
+<div id="newSummary" title="サマリーの新規作成"><table class="table table-bordered w-auto">
+	<tbody>
+		<tr>
+			<th>参加部門</th>
+			<td id="category" colspan="2"><select id="category" name="category" onblur="checkCategoryDup();"></select></td>
+		</tr>
+		<tr>
+			<th>運用したコールサイン</th>
+			<td id="owner" colspan="2"><input type="text" id="owner" name="owner" maxlength="12" onkeypress="return onKeyPressCallsign(event);" onblur="onBlurCallsign(event);checkCategoryDup();searchSummary();" /></td>
+		</tr>
+		<tr>
+			<th>氏名(社団の代表者名)</th>
+			<td id="name" colspan="2"><input type="text" id="name" name="name" /></td>
+		</tr>
+		<tr>
+			<th>連絡先住所</th>
+			<td id="address" colspan="2"><input type="text" id="address" name="address" /></td>
+		</tr>
+		<tr>
+			<th>Ｅメールアドレス</th>
+			<td id="email" colspan="2"><input type="text" id="email" name="email" /></td>
+		</tr>
+		<tr>
+			<th>運用者リスト</th>
+			<td id="multioplist" colspan="2"><input type="text" id="multioplist" name="multioplist" /></td>
+		</tr>
+		<tr>
+			<th>登録クラブ番号</th>
+			<td id="regclubnumber"><input type="text" id="regclubnumber" name="regclubnumber" maxlength="10" onkeypress="return onKeyPressRegclubnumber(event);" onblur="onBlurRegclubnumber(event);" /></td>
+			<td id="regclubname"></td>
+		</tr>
+	</tbody>
+</table></div>
+<!-- 日付の説明 -->
+<div id="helpDate" class="helpContent">
+	<p>日付は以下のように入力できます。</p>
+	<table>
+		<thead><tr>
+			<th id="input">入力例</th>
+			<th id="converted">変換される値</th>
+			<th id="remarks">備考</th>
+		</tr></thead>
+		<tbody>
+			<tr>
+				<td>0123</td><td>2020/01/23</td><td>年は現在の年が補完されます</td>
+			</tr>
+			<tr>
+				<td>2/28</td><td>2020/02/28</td><td>'/'を入力する場合は一桁でも可能です</td>
+			</tr>
+			<tr>
+				<td>20200201</td><td>2020/02/21</td><td>８桁で入力できます</td>
+			</tr>
+			<tr>
+				<td>2020/2/1</td><td>2020/02/21</td><td>&nbsp;</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- 時刻の説明 -->
+<div id="helpTime" class="helpContent">
+	<p>時刻は以下のように入力できます。</p>
+	<table>
+		<thead><tr>
+			<th id="input">入力例</th>
+			<th id="converted">変換される値</th>
+			<th id="remarks">備考</th>
+		</tr></thead>
+		<tbody>
+			<tr>
+				<td>0123</td><td>01:23</td><td>４桁で入力できます</td>
+			</tr>
+			<tr>
+				<td>2:28</td><td>02:28</td><td>':'を入力する場合は一桁でも可能です</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- ダイアログ -->
+<div id="dialog"></div>
+<!-- ファイル参照 -->
+<div id="source" title="ファイルの参照"><iframe></iframe></div>
+<!-- 待機中背景 -->
+<div id="wait"></div>
+</body>
+</html>

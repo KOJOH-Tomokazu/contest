@@ -1,0 +1,384 @@
+/**
+ * マスターメンテナンス　スタイルシート
+ * @author JJ4KME
+ */
+@charset "UTF-8";
+/* ========================================================================== */
+/* 全体                                                                       */
+/* ========================================================================== */
+div.tab-pane {
+	overflow:			scroll;
+}
+
+div.tab-pane table.table th {
+	color:				#FFFFFF;
+	background-color:	#215591;
+}
+
+div.ui-widget-content {
+	font-family:		'ＭＳ ゴシック';
+	font-size:			10pt;
+}
+
+/* ========================================================================== */
+/* 参加カテゴリーと対象周波数帯                                               */
+/* ========================================================================== */
+table#categories {
+	table-layout:		fixed;
+}
+table#categories tfoot td#buttons {
+}
+table#categories tbody td {
+	padding:			1px;
+}
+table#categories tbody tr:nth-child(even) td {
+	background-color:	#CCFFFF;
+}
+
+/* 表示順 */
+table#categories thead th#order {
+	width:				30px;
+	min-width:			30px;
+	max-width:			30px;
+	line-height:		100%;
+	text-align:			center;
+}
+table#categories tbody td.order {
+	text-align:			center;
+}
+
+/* コード */
+table#categories thead th#code {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+	text-align:			center;
+}
+table#categories tbody td.code {
+}
+
+/* 名称 */
+table#categories thead th#name {
+	width:				400px;
+	min-width:			400px;
+	max-width:			400px;
+	text-align:			center;
+}
+table#categories tbody td.name {
+}
+
+/* 対象周波数帯 */
+table#categories thead th#bands {
+	text-align:			center;
+}
+table#categories tbody td.bands {
+}
+table#categories tbody td.bands label {
+	margin-right:		10px;
+}
+
+/* ボタン列 */
+table#categories thead th#buttons {
+	width:				150px;
+	min-width:			150px;
+	max-width:			150px;
+}
+table#categories tbody td.buttons {
+}
+
+/* ========================================================================== */
+/* 同時提出可否マスター                                                       */
+/* ========================================================================== */
+table#duplicates tbody th.mode1 {
+	white-space:		nowrap;
+}
+table#duplicates tbody th.mode2 {
+	width:				1em;
+	min-width:			1em;
+	max-width:			1em;
+	height:				4em;
+	vertical-align:		bottom;
+}
+table#duplicates tbody th.mode2 div {
+	transform:			rotate(-90deg);
+}
+table#duplicates tbody td.enabled {
+	text-align:			center;
+	cursor:				pointer;
+}
+table#duplicates tbody td.ok {
+	background-color:	#CCFFFF;
+}
+table#duplicates tbody td.ng {
+	background-color:	#FFCCCC;
+}
+
+/* ========================================================================== */
+/* マルチプライヤー                                                           */
+/* ========================================================================== */
+table#multipliers {
+	table-layout:		fixed;
+}
+table#multipliers tbody td {
+	padding:			1px;
+}
+table#multipliers tbody tr:nth-child(even) td {
+	background-color:	#CCFFFF;
+}
+/* コード */
+table#multipliers thead th#code {
+	width:				90px;
+	min-width:			90px;
+	max-width:			90px;
+	text-align:			center;
+}
+table#multipliers tbody td.code {
+}
+
+/* 名称 */
+table#multipliers thead th#name {
+	width:				150px;
+	min-width:			150px;
+	max-width:			150px;
+	text-align:			center;
+}
+table#multipliers tbody td.name {
+}
+
+/* 点数 */
+table#multipliers thead th#point {
+	width:				2em;
+	min-width:			2em;
+	max-width:			2em;
+	content:			"\a";
+	white-space:		normal;
+	line-height:		10pt;
+	text-align:			center;
+}
+table#multipliers tbody td.point {
+	text-align:			center;
+}
+
+/* 有効カテゴリー */
+table#multipliers thead th#categories {
+	text-align:			center;
+}
+table#multipliers tbody td.categories {
+}
+table#multipliers tbody td.categories label {
+	margin-right:		10px;
+}
+
+/* ボタン */
+table#multipliers thead th#buttons {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#multipliers tbody td.buttons {
+}
+
+/* ========================================================================== */
+/* 周波数帯ごとの交信時間帯                                                   */
+/* ========================================================================== */
+table#periods tbody td {
+	padding:			1px;
+}
+/* 周波数帯 */
+table#periods thead th#band {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+	text-align:			center;
+}
+table#periods tbody td.band {
+	text-align:			right;
+}
+table#periods tfoot td.band {
+}
+
+/* 開始・終了日時 */
+table#periods thead th#startTime {
+	width:				180px;
+	min-width:			180px;
+	max-width:			180px;
+	text-align:			center;
+}
+table#periods thead th#endTime {
+	width:				180px;
+	min-width:			180px;
+	max-width:			180px;
+	text-align:			center;
+}
+table#periods tbody td.datetime {
+	text-align:			center;
+}
+table#periods tfoot td.datetime {
+	text-align:			right;
+}
+
+/* ========================================================================== */
+/* モード区分                                                                 */
+/* ========================================================================== */
+table#modecat tbody td {
+	padding:			1px;
+}
+/* モード表記 */
+table#modecat thead th#mode {
+	width:				100px;
+	min-width:			100px;
+	max-width:			100px;
+	text-align:			center;
+}
+table#modecat tbody td.mode {
+}
+
+/* 分類 */
+table#modecat thead th#category {
+	width:				160px;
+	min-width:			160px;
+	max-width:			160px;
+	text-align:			center;
+}
+table#modecat tbody td.category {
+}
+
+/* 表示有無 */
+table#modecat thead th#disp {
+	width:				140px;
+	min-width:			140px;
+	max-width:			140px;
+	text-align:			center;
+}
+table#modecat tbody td.disp {
+}
+
+/* ボタン */
+table#modecat thead th#buttons {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#modecat tbody td.buttons {
+}
+
+/* ========================================================================== */
+/* 登録クラブ一覧                                                             */
+/* ========================================================================== */
+table#clubs {
+	table-layout:		fixed;
+}
+table#clubs tbody td {
+	padding:			1px;
+}
+table#clubs tbody tr:nth-child(even) td {
+	background-color:	#CCFFFF;
+}
+/* 登録番号 */
+table#clubs thead th#number {
+	width:				370px;
+	min-width:			370px;
+	max-width:			370px;
+	text-align:			center;
+}
+table#clubs tbody td.number {
+}
+table#clubs tbody td.number select#pref {
+	width:				200px;
+	min-width:			200px;
+	max-width:			200px;
+}
+table#clubs tbody td.number select#genre {
+	width:				90px;
+	min-width:			90px;
+	max-width:			90px;
+}
+
+/* 名称 */
+table#clubs thead th#name {
+	width:				300px;
+	min-width:			300px;
+	max-width:			300px;
+	text-align:			center;
+}
+table#clubs tbody td.name {
+}
+
+/* ボタン */
+table#clubs thead th#buttons {
+	width:				70px;
+	min-width:			70px;
+	max-width:			70px;
+}
+table#clubs tbody td.buttons {
+}
+
+/* ========================================================================== */
+/* プリフィクス表示順                                                         */
+/* ========================================================================== */
+table#prefixOrder {
+	table-layout:		fixed;
+}
+table#prefixOrder tbody td {
+	padding:			1px;
+}
+table#prefixOrder tbody tr:nth-child(even) td {
+	background-color:	#CCFFFF;
+}
+
+/* 表示順 */
+table#prefixOrder thead th#order {
+	width:				2em;
+	min-width:			2em;
+	max-width:			2em;
+	content:			"\a";
+	white-space:		normal;
+	line-height:		10pt;
+	text-align:			center;
+}
+table#prefixOrder tbody td.order {
+	text-align:			center;
+}
+
+/* プリフィクス */
+table#prefixOrder thead th#prefix {
+	width:				80px;
+	min-width:			80px;
+	max-width:			80px;
+}
+table#prefixOrder tbody td.prefix {
+}
+
+/* ボタン */
+table#prefixOrder thead th#buttons {
+}
+table#prefixOrder tbody td.buttons {
+}
+
+/* ========================================================================== */
+/* ユーザー情報ダイアログ                                                     */
+/* ========================================================================== */
+div#administrator {
+	display:			none;
+}
+
+div#administrator table th {
+	width:				130px;
+	min-width:			130px;
+	max-width:			130px;
+}
+div#administrator table td {
+	width:				200px;
+	min-width:			200px;
+	max-width:			200px;
+}
+div#administrator table td input {
+	width:				calc(100% - 10px);
+	min-width:			calc(100% - 10px);
+	max-width:			calc(100% - 10px);
+}
+div#administrator table td select {
+	width:				100%;
+	min-width:			100%;
+	max-width:			100%;
+}

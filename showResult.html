@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="libs/jQuery/jquery-ui.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="showResult.css" />
+<script src="libs/bootstrap/js/bootstrap.js"></script>
+<script src="libs/jQuery/jquery.js"></script>
+<script src="libs/jQuery/jquery-ui.js"></script>
+<script src="common.js"></script>
+<script src="showResult.js"></script>
+<title>オールＪＡ４コンテスト - 成績詳細</title>
+</head>
+<body>
+<table class="table table-bordered w-auto" id="summary">
+	<thead><tr>
+		<th id="owner">コールサイン</th>
+		<th id="category">参加部門</th>
+		<th id="numsqo">QSO数</th>
+		<th id="point">点数</th>
+		<th id="multi">マルチ</th>
+		<th id="total">得点</th>
+	</tr></thead>
+	<tbody><tr>
+		<td id="owner"></td>
+		<td id="category"></td>
+		<td id="numsqo"></td>
+		<td id="point"></td>
+		<td id="multi"></td>
+		<td id="total"></td>
+	</tr></tbody>
+</table>
+<table class="table table-bordered w-auto" id="scores">
+	<thead><tr>
+		<th id="band">周波数帯</th>
+		<th id="numsqo">QSO数</th>
+		<th id="point">点数</th>
+		<th id="multi">マルチ</th>
+		<th id="total">得点</th>
+	</tr></thead>
+	<tbody></tbody>
+</table>
+<table class="table table-bordered w-auto" id="errors">
+	<thead><tr>
+		<th colspan="2">エラー内容</th>
+		<th id="count">件数</th>
+	</tr></thead>
+	<tbody></tbody>
+</table>
+<table class="table table-bordered w-auto" id="oplist">
+	<thead><tr>
+		<th>運用者リスト</th>
+	</tr></thead>
+	<tbody><tr>
+		<td id="oplist"></td>
+	</tr></tbody>
+</table>
+<table class="table table-bordered w-auto" id="comments">
+	<thead><tr>
+		<th>コメント</th>
+	</tr></thead>
+	<tbody><tr>
+		<td id="comments"></td>
+	</tr></tbody>
+</table>
+<table class="table table-bordered w-auto" id="body">
+	<thead><tr>
+		<th id="datetime">交信日時(<span id="timezone">JST</span>)</th>
+		<th id="callsign">相手の<br />コールサイン</th>
+		<th id="freq">周波数帯</th>
+		<th id="mode">電波の<br />型式</th>
+		<th class="number">送信ナンバー</th>
+		<th class="number">受信ナンバー</th>
+		<th id="multi">マルチ</th>
+		<th id="point">点<br />数</th>
+		<th id="error">エラー詳細</th>
+	</tr></thead>
+	<tbody></tbody>
+</table>
+<button class="btn btn-primary" id="fixScore" onclick="fixScore();"    >確定して閉じる</button>
+<button class="btn btn-primary" id="close"    onclick="window.close();">閉じる</button>
+<!-- ダイアログ -->
+<div id="dialog"></div>
+<!-- 待機中背景 -->
+<div id="wait"></div>
+</body>
+</html>

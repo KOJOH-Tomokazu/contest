@@ -87,7 +87,7 @@ function initialize() {
 			clubs = {};
 		},
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			$('span#contest_name').html(data.schemas[0].description);
 			// 周波数帯のリストを作る
 			for (let value in data.BANDS) {
@@ -108,7 +108,7 @@ function initialize() {
 			}
 
 		} else {
-			alert(data.MESSAGE);
+			alert(data.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -506,7 +506,7 @@ function getSummaries() {
 			$('table#log > tbody').empty();
 		},
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			summaries = data.SUMMARIES;
 
 			for (let callsign in summaries) {
@@ -572,17 +572,19 @@ function checkCategoryDup() {
 			$('select#category').removeClass('error').prop('title', '');
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 1) {
-			// 既に提出済みのカテゴリーだったら
-			$('select#category').addClass('error').prop('title', '同じ参加部門のサマリーがあります');
-
-		} else if (data.RESULTCD == 2) {
-			// 同時提出できないカテゴリーだったら
-			$('select#category').addClass('error').prop('title', '同時に提出できない組み合わせです');
-
-		} else if (data.RESULTCD == 3) {
-			// 既に２個あったら
-			$('select#category').addClass('error').prop('title', '既に２部門提出されています');
+		if (!data.success) {
+			if (data.code == 1) {
+				// 既に提出済みのカテゴリーだったら
+				$('select#category').addClass('error').prop('title', '同じ参加部門のサマリーがあります');
+	
+			} else if (data.code == 2) {
+				// 同時提出できないカテゴリーだったら
+				$('select#category').addClass('error').prop('title', '同時に提出できない組み合わせです');
+	
+			} else if (data.code == 3) {
+				// 既に２個あったら
+				$('select#category').addClass('error').prop('title', '既に２部門提出されています');
+			}
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -619,7 +621,7 @@ function readLog(sumid) {
 			$('table#log > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// サマリー情報を表示
 			$('table#summary input#name'         ).val(data.summary.name);
 			$('table#summary input#address'      ).val(data.summary.address);
@@ -773,7 +775,7 @@ function confirmLog(e, action) {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			if (action == 'confirm') {
 				// ログの確認だったら
 				let logData = data.LOGDATA[0];
@@ -798,7 +800,7 @@ function confirmLog(e, action) {
 			}
 
 		} else {
-			alert(data.MESSAGE);
+			alert(data.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -854,12 +856,12 @@ function appendLog(e) {
 
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			readLog(data.LOGDATA.sumid);
 			$('tr#input input#worktime').focus();
 
 		} else {
-			alert(data.MESSAGE);
+			alert(data.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -886,7 +888,7 @@ function uploadFile() {
 		}
 	}).done(function (data, textStatus, jqXHR) {
 		let result = JSON.parse(data);
-		if (result.RESULTCD == 0) {
+		if (result.success) {
 			$('table#summary td#filename').empty();
 			$('table#summary td#filename').append([
 				$('<button />').attr({onclick: 'showFile("' + result.SUMID + '");'}).html('参照'),
@@ -894,7 +896,7 @@ function uploadFile() {
 				result.FILENAME]);
 
 		} else {
-			alert(result.MESSAGE);
+			alert(result.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -935,7 +937,7 @@ function showNewSummary() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			// コールサインをクリア
 			$('div#newSummary input#owner').val('');
@@ -975,7 +977,7 @@ function showNewSummary() {
 			});
 
 		} else {
-			alert(result.MESSAGE);
+			alert(result.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -1005,12 +1007,12 @@ function createSummary() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に作成出来ていたら再読み込み
 			location.reload();
 
 		} else {
-			alert(result.MESSAGE);
+			alert(result.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -1034,7 +1036,7 @@ function searchSummary() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に作成出来ていたら値をセット
 			if (data.SUMMARY !== null) {
 				$('div#newSummary input#name').val(data.SUMMARY.name);
@@ -1045,7 +1047,7 @@ function searchSummary() {
 			}
 
 		} else {
-			alert(result.MESSAGE);
+			alert(result.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -1075,12 +1077,12 @@ function updateSummary() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に更新できていたら
 			readLog(data.SUMMARY.sumid);
 
 		} else {
-			alert(result.MESSAGE);
+			alert(result.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -1104,12 +1106,12 @@ function deleteSummary() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に作成出来ていたら再検索
 			getSummaries();
 
 		} else {
-			alert(result.MESSAGE);
+			alert(result.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {

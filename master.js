@@ -64,7 +64,7 @@ function get_user() {
 
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得できていたら
 			$('a#navbarUserMenu').html(data.user.user_id);
 			$('input#user_id').val(data.user.user_id);
@@ -97,7 +97,7 @@ function getBands() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			bands = {};
 			for (let i = 0; i < data.BANDS.length; i++) {
@@ -106,7 +106,7 @@ function getBands() {
 			$('div#tabs > ul > li:first > a').click();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -195,14 +195,14 @@ function category_list() {
 			$('table#categories > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			for (let code in data.categories) {
 				category_add(data.categories[code]);
 			}
 			category_renumber();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -336,11 +336,11 @@ function category_regist() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			category_list();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 			$('div#wait').hide();
 		}
 
@@ -379,7 +379,7 @@ function duplicate_list() {
 			$('table#duplicates > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			categories = {};
 			for (let disp_order in data.categories) {
@@ -422,7 +422,7 @@ function duplicate_list() {
 			}
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -475,11 +475,11 @@ function duplicate_regist() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			duplicate_list();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 			$('div#wait').hide();
 		}
 
@@ -510,7 +510,7 @@ function multi_list() {
 			$('table#multipliers > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			categories = {};
 			for (let disp_order in data.categories) {
@@ -524,7 +524,7 @@ function multi_list() {
 			}
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -621,11 +621,11 @@ function multi_regist() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			multi_list();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 			$('div#wait').hide();
 		}
 
@@ -656,7 +656,7 @@ function period_list() {
 			$('table#periods > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			for (let freq in bands) {
 				$('table#periods > tbody').append(
@@ -675,7 +675,7 @@ function period_list() {
 			}
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -713,11 +713,11 @@ function period_regist() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			period_list();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 			$('div#wait').hide();
 		}
 
@@ -772,14 +772,14 @@ function modecat_list() {
 			$('table#modecat > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			for (let i = 0; i < data.modecats.length; i++) {
 				modecat_add(data.modecats[i]);
 			}
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -875,11 +875,11 @@ function modecat_regist() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			modecat_list();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 			$('div#wait').hide();
 		}
 
@@ -910,7 +910,7 @@ function club_list() {
 			$('table#clubs > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			// 支部の一覧を作る
 			branches = $('<select />').addClass('form-select').attr({id: 'pref'});
@@ -924,7 +924,7 @@ function club_list() {
 			}
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -1031,11 +1031,11 @@ function club_regist() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			club_list();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 			$('div#wait').hide();
 		}
 
@@ -1063,14 +1063,14 @@ function prefix_list() {
 			$('table#prefixOrder > tbody').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得出来ていたら
 			for (let i = 0; i < data.prefixOrders.length; i++) {
 				prefix_add(data.prefixOrders[i]);
 			}
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -1171,11 +1171,11 @@ function prefix_regist() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			prefix_list();
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.success);
 			$('div#wait').hide();
 		}
 

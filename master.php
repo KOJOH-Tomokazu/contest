@@ -15,7 +15,7 @@ try {
 
 	if (isset($_REQUEST['CALL_AJAX'])) {
 		// AJAX呼び出し
-		$result = array('RESULTCD' => 0, 'MESSAGE' => '');
+		$result = array('success' => TRUE);
 
 		if ($_REQUEST['CALL_AJAX'] == 'get_user') {
 			// ユーザー情報の取得
@@ -125,8 +125,9 @@ try {
 } catch (PDOException $pe) {
 	$db->rollBack();
 	$result = array(
-			'RESULTCD'	=> $pe->getCode(),
-			'MESSAGE'	=> $pe->getMessage());
+		'success'	=> FALSE,
+		'code'		=> $pe->getCode(),
+		'message'	=> $pe->getMessage());
 
 } finally {
 	$db		= null;

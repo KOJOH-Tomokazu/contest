@@ -11,15 +11,16 @@ try {
 
 	if (isset($_REQUEST['CALL_AJAX'])) {
 		// AJAX呼び出し
-		$result = array('RESULTCD' => 0, 'MESSAGE' => '');
+		$result = array('sucess' => TRUE);
 
 		if ($_REQUEST['CALL_AJAX'] == 'showDetail') {
 			// 詳細表示
 			$summary = Summary::get($db, $_REQUEST['sumid']);
 			if ($summary === null) {
 				$result = array(
-						'RESULTCD'	=> -1,
-						'MESSAGE'	=> 'サマリーが登録されていません(不正アクセス)');
+					'success'	=> FALSE,
+					'code'		=> -1,
+					'message'	=> 'サマリーが登録されていません(不正アクセス)');
 
 			} else {
 				if (isset($_COOKIE['PHP_AUTH_USER']) && isset($_COOKIE['PHP_AUTH_PASS']) &&
@@ -60,8 +61,9 @@ try {
 } catch (PDOException $pe) {
 	$db->rollBack();
 	$result = array(
-			'RESULTCD'	=> $pe->getCode(),
-			'MESSAGE'	=> $pe->getMessage());
+		'success'	=> FALSE,
+		'code'		=> $pe->getCode(),
+		'message'	=> $pe->getMessage());
 
 } finally {
 	$db		= null;

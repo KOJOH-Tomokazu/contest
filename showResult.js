@@ -46,7 +46,7 @@ function showDetail() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			let multipliers = {};
 			let category_name = '';
 			for (let category of data.categories) {
@@ -166,7 +166,7 @@ function showDetail() {
 			}
 
 		} else {
-			showAlertDialog('オールＪＡ４コンテスト', data.MESSAGE);
+			showAlertDialog('オールＪＡ４コンテスト', data.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -193,12 +193,12 @@ function fixScore() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に終了していたら
 			window.close();
 
 		} else {
-			showAlertDialog('オールＪＡ４コンテスト', data.MESSAGE);
+			showAlertDialog('オールＪＡ４コンテスト', data.message);
 			$('div#wait').hide();
 		}
 

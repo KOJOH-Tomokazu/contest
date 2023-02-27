@@ -16,7 +16,7 @@ try {
 
 	if (isset($_REQUEST['CALL_AJAX'])) {
 		// AJAX呼び出し
-		$result = array('RESULTCD' => 0, 'MESSAGE' => '');
+		$result = array('success' => TRUE);
 
 		if ($_REQUEST['CALL_AJAX'] == 'initialize') {
 			// 初期処理
@@ -41,14 +41,18 @@ try {
 
 		} else if ($_REQUEST['CALL_AJAX'] == 'checkCategoryDup') {
 			// 同時提出可能なカテゴリーか調べる
-			$result['RESULTCD'] = checkCategoryDup($db, $_REQUEST['callsign'], $_REQUEST['category']);
+			$result = array(
+				'success'	=> FALSE,
+				'code'		=> checkCategoryDup($db, $_REQUEST['callsign'], $_REQUEST['category']));
 
 		} else if ($_REQUEST['CALL_AJAX'] == 'getLogdata') {
 			// 登録済みログデータの取得
 			$summary = Summary::get($db, $_REQUEST['sumid']);
 			if ($summary === null) {
-				$result['RESULTCD'] = -1;
-				$result['MESSAGE'] = 'サマリーが登録されていません(データ異常)';
+				$result = array(
+					'success'	=> FALSE,
+					'code'		=> -1,
+					'message'	=> 'サマリーが登録されていません(データ異常)');
 
 			} else {
 				$result['summary'] = $summary->toArray();
@@ -103,8 +107,9 @@ try {
 			$summary = Summary::get($db, $_REQUEST['sumid']);
 			if ($summary === null) {
 				$result = array(
-						'RESULTCD'	=> -1,
-						'MESSAGE'	=> 'サマリーが登録されていません(データ異常)');
+					'success'	=> FALSE,
+					'code'		=> -1,
+					'message'	=> 'サマリーが登録されていません(データ異常)');
 
 			} else {
 				$user = Administrator::get($db, $_COOKIE['user_id']);
@@ -207,47 +212,49 @@ try {
 				$summary = Summary::get($db, $_REQUEST['sumid']);
 				if ($summary === null) {
 					$result = array(
-							'RESULTCD'	=> -1,
-							'MESSAGE'	=> 'サマリーが登録されていません(データ異常)');
+						'success'	=> FALSE,
+						'code'		=> -1,
+						'message'	=> 'サマリーが登録されていません(データ異常)');
 
 				} else {
 					$summary->filename = $TempFile;
 					$summary->update($db);
 
-					$result['RESULTCD'] = 0;
 					$result['SUMID'] = $_REQUEST['sumid'];
 					$result['FILENAME'] = $TempFile;
 				}
 
 			} else {
 				$result = array(
-						'RESULTCD'	=> -1,
-						'MESSAGE'	=> '一時ファイルのコピーに失敗しました');
+					'success'	=> FALSE,
+					'code'		=> -1,
+					'message'	=> '一時ファイルのコピーに失敗しました');
 			}
 
 		} else {
 			// 失敗していたらメッセージを作る
-			$result['RESULTCD'] = -1;
+			$result['success']	= FALSE;
+			$result['code']		= -1;
 			if ($_FILES['source']['error'] == UPLOAD_ERR_INI_SIZE) {
-				$result['MESSAGE'] = 'ファイルが大きすぎます';
+				$result['message'] = 'ファイルが大きすぎます';
 
 			} else if ($_FILES['source']['error'] == UPLOAD_ERR_FORM_SIZE) {
-				$result['MESSAGE'] = 'ファイルが大きすぎます';
+				$result['message'] = 'ファイルが大きすぎます';
 
 			} else if ($_FILES['source']['error'] == UPLOAD_ERR_PARTIAL) {
-				$result['MESSAGE'] = '一部のみしかアップロードされていません';
+				$result['message'] = '一部のみしかアップロードされていません';
 
 			} else if ($_FILES['source']['error'] == UPLOAD_ERR_NO_FILE) {
-				$result['MESSAGE'] = 'ファイルはアップロードされませんでした';
+				$result['message'] = 'ファイルはアップロードされませんでした';
 
 			} else if ($_FILES['source']['error'] == UPLOAD_ERR_NO_TMP_DIR) {
-				$result['MESSAGE'] = 'テンポラリフォルダがありません';
+				$result['message'] = 'テンポラリフォルダがありません';
 
 			} else if ($_FILES['source']['error'] == UPLOAD_ERR_CANT_WRITE) {
-				$result['MESSAGE'] = 'ディスクへの書き込みに失敗しました';
+				$result['message'] = 'ディスクへの書き込みに失敗しました';
 
 			} else if ($_FILES['source']['error'] == UPLOAD_ERR_EXTENSION) {
-				$result['MESSAGE'] = '拡張モジュールがファイルのアップロードを中止しました';
+				$result['message'] = '拡張モジュールがファイルのアップロードを中止しました';
 			}
 		}
 	}
@@ -257,8 +264,9 @@ try {
 } catch (PDOException $pe) {
 	$db->rollBack();
 	$result = array(
-			'RESULTCD'	=> $pe->getCode(),
-			'MESSAGE'	=> $pe->getMessage());
+		'sucess'	=> FALSE,
+		'code'		=> $pe->getCode(),
+		'message'	=> $pe->getMessage());
 
 } finally {
 	$db		= null;

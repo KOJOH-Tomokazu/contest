@@ -13,7 +13,7 @@ try {
 
 	if (isset($_REQUEST['CALL_AJAX'])) {
 		// AJAX呼び出し
-		$result = array('RESULTCD' => 0, 'MESSAGE' => '');
+		$result = array('success' => TRUE);
 
 		if ($_REQUEST['CALL_AJAX'] == 'initialize') {
 			// 初期処理
@@ -28,7 +28,7 @@ try {
 			$result['LOGS'] = array();
 			$source = listLogs($db, isset($_REQUEST['sort_keys']) ? $_REQUEST['sort_keys'] : NULL);
 			if ($source === false) {
-				$result['RESULTCD'] = -1;
+				$result['success'] = FALSE;
 
 			} else {
 				foreach ($source as $record) {
@@ -70,8 +70,10 @@ try {
 		} else if ($_REQUEST['CALL_AJAX'] == 'verifyPassword') {
 			// パスワード照合
 			$summary = Summary::get($db, $_REQUEST['sumid']);
-			$result['RESULTCD'] = (password_verify($_REQUEST['password'], $summary->password) ? 0 : -1);
-			$result['sumid'] = $_REQUEST['sumid'];
+			$result = array(
+				'success'	=> FALSE,
+				'code'		=> (password_verify($_REQUEST['password'], $summary->password) ? 0 : -1),
+				'sumid'		=> $_REQUEST['sumid']);
 		}
 	}
 
@@ -81,8 +83,9 @@ try {
 	error_log($pe->getMessage());
 	$db->rollBack();
 	$result = array(
-			'RESULTCD'	=> $pe->getCode(),
-			'MESSAGE'	=> $pe->getMessage());
+		'success'	=> FALSE,
+		'code'		=> $pe->getCode(),
+		'message'	=> $pe->getMessage());
 
 } finally {
 	$db		= null;

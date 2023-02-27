@@ -82,7 +82,7 @@ function initialize() {
 			$('span#contest_name').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得できていたら
 			$('span#contest_name').html(data.schemas[0].description);
 
@@ -124,7 +124,7 @@ function listLogs() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			$('table#list > tbody').empty();
 			$('table#list > tfoot').empty();
 
@@ -197,7 +197,7 @@ function getComment() {
 			$('div#comment > div#callsign').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			if (data.COMMENT !== null) {
 				$('div#comment > div#body').html(data.COMMENT.comments);
 				$('div#comment > div#callsign').html(data.COMMENT.callsign);
@@ -240,18 +240,20 @@ function showDetailVerify(sumid) {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// パスワードが合っていたら
 			showDetail(data.sumid);
 
-		} else if (data.RESULTCD == -1) {
-			// パスワードが間違っていたら
-			showAlertDialog('オールＪＡ４コンテスト', 'パスワードが違います');
-			$('div#wait').hide();
-
 		} else {
-			showAlertDialog('オールＪＡ４コンテスト', data.MESSAGE);
-			$('div#wait').hide();
+			if (data.code == -1) {
+				// パスワードが間違っていたら
+				showAlertDialog('オールＪＡ４コンテスト', 'パスワードが違います');
+				$('div#wait').hide();
+
+			} else {
+				showAlertDialog('オールＪＡ４コンテスト', data.message);
+				$('div#wait').hide();
+			}
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -295,12 +297,12 @@ function clearCollate() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に終了していたら
 			listLogs();
 
 		} else {
-			showAlertDialog('オールＪＡ４コンテスト', data.MESSAGE);
+			showAlertDialog('オールＪＡ４コンテスト', data.message);
 			$('div#wait').hide();
 		}
 
@@ -340,12 +342,12 @@ function startCollate() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に終了していたら
 			listLogs();
 
 		} else {
-			showAlertDialog('オールＪＡ４コンテスト', data.MESSAGE);
+			showAlertDialog('オールＪＡ４コンテスト', data.message);
 			$('div#wait').hide();
 		}
 
@@ -388,12 +390,12 @@ function setPassword_exec(sumid) {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に終了していたら
 			showAlertDialog('オールＪＡ４コンテスト', '成績閲覧用パスワードを設定しました');
 
 		} else {
-			showAlertDialog('オールＪＡ４コンテスト', data.MESSAGE);
+			showAlertDialog('オールＪＡ４コンテスト', data.message);
 			$('div#wait').hide();
 		}
 

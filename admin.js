@@ -106,7 +106,7 @@ function initialize() {
 			$('select#schema').empty();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 複数件だったら
 			for (let schema of data.schemas) {
 				$('select#schema').append(
@@ -149,7 +149,7 @@ function login(user, pass) {
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		if (jqXHR.status == 401) {
-			$('div#message').html(jqXHR.responseJSON.MESSAGE).show();
+			$('div#message').html(jqXHR.responseJSON.message).show();
 		}
 
 	}).always(function () {
@@ -172,7 +172,7 @@ function logout() {
 
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			location.reload();
 		}
 
@@ -195,7 +195,7 @@ function get_user() {
 
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得できていたら
 			$('a#navbarUserMenu').html(data.user.user_id);
 			$('input#user_id').val(data.user.user_id);
@@ -260,13 +260,13 @@ function get_deadline() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			// 正常に取得できていたら
 			$('input#deadline1').val(data.deadlines.deadline1);
 			$('input#deadline2').val(data.deadlines.deadline2);
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
@@ -290,11 +290,11 @@ function set_deadline() {
 			$('div#wait').show();
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		if (data.RESULTCD == 0) {
+		if (data.success) {
 			showAlertDialog('コンテスト管理用', '提出期限を設定しました');
 
 		} else {
-			showAlertDialog('コンテスト管理用', data.MESSAGE);
+			showAlertDialog('コンテスト管理用', data.message);
 		}
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {

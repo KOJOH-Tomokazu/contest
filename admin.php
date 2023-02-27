@@ -11,7 +11,7 @@ try {
 
 	if (isset($_REQUEST['CALL_AJAX'])) {
 		// AJAX呼び出し
-		$result = array('RESULTCD' => 0, 'MESSAGE' => '');
+		$result = array('success' => FALSE);
 
 		if ($_REQUEST['CALL_AJAX'] == 'initialize') {
 			// 初期処理
@@ -26,11 +26,11 @@ try {
 			$users = Administrator::get($db, $_REQUEST['PHP_AUTH_USER']);
 			if (count($users) == 0) {
 				http_response_code(401);
-				$result['MESSAGE'] = 'ユーザーＩＤまたはパスワードが違います';
+				$result['message'] = 'ユーザーＩＤまたはパスワードが違います';
 
 			} else if (!$users[0]->verify($_REQUEST['PHP_AUTH_PASS'], $_REQUEST['schema'])) {
 				http_response_code(401);
-				$result['MESSAGE'] = 'ユーザーＩＤまたはパスワードが違います';
+				$result['message'] = 'ユーザーＩＤまたはパスワードが違います';
 
 			} else {
 				$users[0]->lastlogin = new DateTime();
@@ -72,8 +72,9 @@ try {
 	$db->rollBack();
 	error_log($pe->getTraceAsString());
 	$result = array(
-			'RESULTCD'	=> $pe->getCode(),
-			'MESSAGE'	=> $pe->getMessage());
+		'success'	=> FALSE,
+		'code'		=> $pe->getCode(),
+		'message'	=> $pe->getMessage());
 
 } finally {
 	$db		= null;

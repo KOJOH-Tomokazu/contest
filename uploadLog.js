@@ -32,7 +32,7 @@ let clubs;
  */
 $(window).on('load', function(e) {
 
-	let temp = location.search.substr(1).split('&');
+	let temp = location.search.substring(1).split('&');
 	schema	= temp[0];
 	if (temp.length > 1) {
 		category = temp[1];

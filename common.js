@@ -82,7 +82,7 @@ function parseQuery() {
 
 	let result = {};
 	if (location.search != '') {
-		let source = location.search.substr(1);
+		let source = location.search.substring(1);
 		let temp = [];
 		if (source.indexOf('&') == -1) {
 			temp[0] = source;

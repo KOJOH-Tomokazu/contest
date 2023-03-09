@@ -107,7 +107,6 @@ function initialize() {
 		}
 	}).done(function (data, textStatus, jqXHR) {
 		if (data.success) {
-			// 複数件だったら
 			for (let schema of data.schemas) {
 				$('select#schema').append(
 					$('<option />').val(schema.schema_name).html(schema.description));
@@ -183,6 +182,9 @@ function logout() {
 	});
 }
 
+/**
+ * ユーザー情報を取得
+ */
 function get_user() {
 
 	$.ajax({
@@ -211,11 +213,17 @@ function get_user() {
 	});
 }
 
+/**
+ * パスワード変更を開始
+ */
 function change_password() {
 
 	$('div#password').modal('show');
 }
 
+/**
+ * パスワード変更を実行
+ */
 function change_password_execute() {
 
 	$.ajax({
@@ -248,6 +256,9 @@ function change_password_execute() {
 	});
 }
 
+/**
+ * 提出期限を取得する
+ */
 function get_deadline() {
 
 	$.ajax({
@@ -276,6 +287,9 @@ function get_deadline() {
 	});
 }
 
+/**
+ * 提出期限を設定する
+ */
 function set_deadline() {
 
 	$.ajax({
